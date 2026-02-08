@@ -1,56 +1,80 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Hello There, I'm Mohtasim!"
 author_profile: true
-redirect_from: 
+redirect_from:
   - /about/
   - /about.html
 ---
 
-This is the front page of a website that is powered by the [Academic Pages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the repository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. Incidentally, these same features make it a great template for anyone that needs to show off a professional template!
+I'm a **Software Engineer** & **Research Scientist**.\
+My research interests are in Openended Learning using large foundation models!\
+I am also interested in assisting others on their path in the world of **Machine Learning and academia**.
 
- You can fork [this template](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and Markdown files, add your own PDFs and other content, and have your own site for free, with no ads!
+## Career Objective
 
-A data-driven personal website
-======
-Like many other Jekyll-based GitHub Pages templates, Academic Pages makes you separate the website's content from its form. The content & metadata of your website are in structured Markdown files, while various other files constitute the theme, specifying how to transform that content & metadata into HTML pages. You keep these various Markdown (.md), YAML (.yml), HTML, and CSS files in a public GitHub repository. Each time you commit and push an update to the repository, the [GitHub pages](https://pages.github.com/) service creates static HTML pages based on these files, which are hosted on GitHub's servers free of charge.
+A motivated **Software Developer** with a solid foundation in **Computer Science and Engineering**. Through practical experience and training, I have built a diverse skill set in Software Development and Machine Learning. I aim to contribute my technical expertise and passion for innovation to impactful projects, driving growth and excellence in cutting-edge technology environments.
 
-Many of the features of dynamic content management systems (like Wordpress) can be achieved in this fashion, using a fraction of the computational resources and with far less vulnerability to hacking and DDoSing. You can also modify the theme to your heart's content without touching the content of your site. If you get to a point where you've broken something in Jekyll/HTML/CSS beyond repair, your Markdown files describing your talks, publications, etc. are safe. You can rollback the changes or even delete the repository and start over - just be sure to save the Markdown files! You can also write scripts that process the structured data on the site, such as [this one](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb) that analyzes metadata in pages about talks to display [a map of every location you've given a talk](https://academicpages.github.io/talkmap.html).
+## Professional Experience
 
-For those users that need more advanced functionality, the template also supports the following popular tools:
-- [MathJax](https://www.mathjax.org/) for mathematical equations
-- [Mermaid](https://mermaid.js.org/) for diagraming
-- [Plotly](https://plotly.com/javascript/) for plotting
+**Software Engineer**, BASIS Institute of Technology (BITM) Fab 2023 – May 2023 \
+**Job Responsibilities:** (Intern) UI Design, Team Project. \
+Conceptualizing 4+ visuals based on requirements per Month.
 
-Getting started
-======
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this template](https://github.com/academicpages/academicpages.github.io) by clicking the "Use this template" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](https://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
+**Volunteer**, DIU Computer & Programming Club Jan 2022 – May 2022 \
+ **Job Responsibilities:** Guarding Exam Hall, Problem Tester in 4 Contests.
 
-Site-wide configuration
-------
-The main configuration file for the site is in the base directory in [_config.yml](https://github.com/academicpages/academicpages.github.io/blob/master/_config.yml), which defines the content in the sidebars and other site-wide features. You will need to replace the default variables with ones about yourself and your site's github repository. The configuration file for the top menu is in [_data/navigation.yml](https://github.com/academicpages/academicpages.github.io/blob/master/_data/navigation.yml). For example, if you don't have a portfolio or blog posts, you can remove those items from that navigation.yml file to remove them from the header. 
+During my final year at University I was working as a **Student Researcher** at the **DIU CPC Lab** at the **Daffodil International University** under the supervision of **Prof. Nazmun Nessa Moon** working on **Generative Image Modelling** and I made a app using this model.
 
-Create content & metadata
-------
-For site content, there is one Markdown file for each type of content, which are stored in directories like _publications, _talks, _posts, _teaching, or _pages. For example, each talk is a Markdown file in the [_talks directory](https://github.com/academicpages/academicpages.github.io/tree/master/_talks). At the top of each Markdown file is structured data in YAML about the talk, which the theme will parse to do lots of cool stuff. The same structured data about a talk is used to generate the list of talks on the [Talks page](https://academicpages.github.io/talks), each [individual page](https://academicpages.github.io/talks/2012-03-01-talk-1) for specific talks, the talks section for the [CV page](https://academicpages.github.io/cv), and the [map of places you've given a talk](https://academicpages.github.io/talkmap.html) (if you run this [python file](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.py) or [Jupyter notebook](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb), which creates the HTML for the map based on the contents of the _talks directory).
+## Open Source Contributions
 
-**Markdown generator**
+I have experience contributing to [AcademicPages](https://github.com/academicpages/academicpages.github.io) Academic Pages is a GitHub Pages template for personal and professional portfolio-oriented websites.
 
-The repository includes [a set of Jupyter notebooks](https://github.com/academicpages/academicpages.github.io/tree/master/markdown_generator
-) that converts a CSV containing structured data about talks or presentations into individual Markdown files that will be properly formatted for the Academic Pages template. The sample CSVs in that directory are the ones I used to create my own personal website at stuartgeiger.com. My usual workflow is that I keep a spreadsheet of my publications and talks, then run the code in these notebooks to generate the Markdown files, then commit and push them to the GitHub repository.
+Moreover, I have working a [WinUtil](https://github.com/ChrisTitusTech/winutil) This utility is a compilation of Windows tasks I perform on each Windows system I use. It is meant to streamline installs, debloat with tweaks, troubleshoot with config, and fix Windows updates. I am extremely picky about any contributions to keep this project clean and efficient.
 
-How to edit your site's GitHub repository
-------
-Many people use a git client to create files on their local computer and then push them to GitHub's servers. If you are not familiar with git, you can directly edit these configuration and Markdown files directly in the github.com interface. Navigate to a file (like [this one](https://github.com/academicpages/academicpages.github.io/blob/master/_talks/2012-03-01-talk-1.md) and click the pencil icon in the top right of the content preview (to the right of the "Raw | Blame | History" buttons). You can delete a file by clicking the trashcan icon to the right of the pencil icon. You can also create new files or upload files by navigating to a directory and clicking the "Create new file" or "Upload files" buttons. 
+## Academic Qualification:
 
-Example: editing a Markdown file for a talk
-![Editing a Markdown file for a talk](/images/editing-talk.png)
+**Master's** (Computer Science & Engineering)\
+Institution : **Comilla University**\
+Final grade : Ongoing
 
-For more info
-------
-More info about configuring Academic Pages can be found in [the guide](https://academicpages.github.io/markdown/), the [growing wiki](https://github.com/academicpages/academicpages.github.io/wiki), and you can always [ask a question on GitHub](https://github.com/academicpages/academicpages.github.io/discussions). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful.
+**BSC** (Computer Science & Engineering)\
+Institution : **Daffodil International University**\
+Final grade : 3.21 / 4.00\
+Passing Year : 2023
+
+## Training
+
+**Mobile Application Development** – Android & IOS\
+BASIS Institute of Technology & Management (BITM), 01 Nov 2021 – 01 Jan 2022 (150 hrs.)
+
+**DIU Computer & Programming Club**
+Daffodil International University, 03 Oct 2022 – 03 Jan 2023
+
+## Project
+
+[**ImaGen**](https://github.com/mohtasimbh/ImaGen) (AI image generator creates images based on text prompts) Jan2022 – Feb 2023
+Develop an AI-powered image generator that creates images based on text prompts. Project’s achievements and potential impact in fields like art, design, and marketing.\
+**Technology:** Flutter, Dart, Python, TensorFlow/PyTorch, GANs (Generative Adversarial Networks), or diffusion models.
+
+[**Task Management**](https://github.com/mohtasimbh/Lagbe_E-commerce_Web) (Helps users organize, prioritize, and track their tasks efficiently)
+Jan2022 – Feb 2023\
+This app aims to enhance efficiency and collaboration, making task management easier for users across various contexts.\
+**Technology:** Flutter, Dart, MongoDB/PostgreSQL
+
+[**E-commerce App**](https://github.com/mohtasimbh/Lagbe_E-commerce_Web) (e-commerce application that facilitates online shopping) Jan2022 –
+Feb 2023\
+This e-commerce app aims to create a seamless and engaging shopping experience, helping users discover and purchase products effortlessly while providing merchants with effective management tools.\
+**Technology:** Flutter, Dart, MongoDB/PostgreSQL
+
+## Skills
+
+**Technologies:** C/C++, C#, .NET, JavaScript, TypeScript, Node.js, Python, Java, Android, SQL, HTML, CSS, React, Flutter, Dart.\
+**Cloud Services:** App Insight, App Configuration, Key Vault, Blob Storage, Redis Cache, Google Analytics.\
+**Development Tools:** Git, Visual Studio, Azure DevOps, Postman, Docker, Linux.\
+**Microsoft Office:** Excel, Word, PowerPoint.\
+**Problem Solving:** Solved more than 600 data structures and algorithmic problems across various programming platforms such as [Beecrowd](https://www.beecrowd.com.br/judge/en/profile/340922), [Codeforce](https://onlinejudge.org/), [HackerRank]().
+
+## Teaching and Community Contributions
+
+To further contribute to the Machine Learning community, I have a [YouTube](https://www.youtube.com/@xhaaakil) and [Medium](https://medium.com/@xhaaakil) channel where I publish educational Machine Learning content.
