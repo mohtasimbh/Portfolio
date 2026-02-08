@@ -11,7 +11,7 @@ risk management. "
 collection: portfolio
 ---
 
-1. Novee
+**Novee**
 
 Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
 
@@ -22,13 +22,14 @@ The platform is particularly effective in cloud-native and identity-heavy enviro
 Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
 
 Key characteristics:
+
 Autonomous attacker simulation with adaptive logic
 Continuous attack surface reassessment
 Validated attack-path discovery
 Prioritisation based on real progression
 Retesting to confirm remediation effectiveness
 
-2. Harmony Intelligence
+**Harmony Intelligence**
 
 Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
 
@@ -39,13 +40,14 @@ The platform emphasises interpretability. Findings are presented in a way that e
 Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
 
 Key characteristics:
+
 AI-driven testing of complex system interactions
 Focus on logic and workflow exploitation
 Clear contextual explanation of findings
 Support for remediation prioritisation
 Designed for interconnected enterprise environments
 
-3. RunSybil
+**RunSybil**
 
 RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
 
@@ -56,13 +58,14 @@ RunSybil is frequently used in environments where traditional testing produces l
 The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
 
 Key characteristics:
+
 Behaviour-driven autonomous testing
 Focus on progression and persistence
 Reduced noise through validation
 Continuous execution model
 Measurement of remediation impact
 
-4. Mindgard
+**Mindgard**
 
 Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
 
@@ -80,7 +83,7 @@ Pre-deployment and continuous testing support
 Engineering-actionable findings
 Designed for AI-enabled workflows
 
-5. Mend
+**Mend**
 
 Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
 
@@ -91,6 +94,7 @@ Mend is often used by organisations that want AI-assisted validation embedded in
 The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
 
 Key characteristics:
+
 AI-assisted application security testing
 Correlation in multiple risk sources
 Integration with development workflows
@@ -106,13 +110,14 @@ Synack is often chosen for high-risk systems where human judgement remains criti
 The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
 
 Key characteristics:
+
 Hybrid model combining humans and automation
 Trusted researcher network
 Continuous testing ability
 Strong governance and control
 Suitable for high-assurance environments
 
-7. HackerOne
+**HackerOne**
 
 HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
 
@@ -121,6 +126,7 @@ The platform lets organisations to continuously test systems through managed pro
 HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
 
 Key characteristics:
+
 Large global researcher community
 Continuous testing through managed programmes
 Structured disclosure and remediation
