@@ -11,7 +11,8 @@ risk management. "
 collection: portfolio
 ---
 
-**Novee**
+
+## Novee
 
 Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
 
@@ -29,7 +30,7 @@ Validated attack-path discovery
 Prioritisation based on real progression
 Retesting to confirm remediation effectiveness
 
-**Harmony Intelligence**
+## Harmony Intelligence
 
 Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
 
@@ -47,7 +48,7 @@ Clear contextual explanation of findings
 Support for remediation prioritisation
 Designed for interconnected enterprise environments
 
-**RunSybil**
+## RunSybil
 
 RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
 
@@ -65,7 +66,7 @@ Reduced noise through validation
 Continuous execution model
 Measurement of remediation impact
 
-**Mindgard**
+## Mindgard
 
 Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
 
@@ -83,7 +84,7 @@ Pre-deployment and continuous testing support
 Engineering-actionable findings
 Designed for AI-enabled workflows
 
-**Mend**
+## Mend
 
 Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
 
@@ -99,7 +100,9 @@ AI-assisted application security testing
 Correlation in multiple risk sources
 Integration with development workflows
 Emphasis on remediation efficiency
-Scalable in large codebases6. Synack
+Scalable in large codebases
+
+## Synack
 
 Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
 
@@ -117,7 +120,7 @@ Continuous testing ability
 Strong governance and control
 Suitable for high-assurance environments
 
-**HackerOne**
+## HackerOne
 
 HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
 
