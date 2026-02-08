@@ -1,6 +1,6 @@
 ---
-title: "Portfolio item number 1"
-excerpt: "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+title: "Top 7 best AI"
+excerpt: "Top 7 best AI penetration testing companies in 2026<br/><img src='/images/news.png'>"
 collection: portfolio
 ---
 
