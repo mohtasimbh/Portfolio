@@ -1,9 +1,9 @@
 main:
-  - title: "Publications"
-    url: https://scholar.google.com/citations?user=tvz_1QYAAAAJ&hl=en
-
-  - title: "Portfolio"
+  - title: "News"
     url: /portfolio/
+
+  - title: "Research"
+    url: https://scholar.google.com/citations?user=tvz_1QYAAAAJ&hl=en
 
   - title: "CV"
     url: /files/Resume.pdf
