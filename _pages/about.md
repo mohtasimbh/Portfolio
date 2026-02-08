@@ -66,6 +66,7 @@ This app aims to enhance efficiency and collaboration, making task management ea
 Feb 2023\
 This e-commerce app aims to create a seamless and engaging shopping experience, helping users discover and purchase products effortlessly while providing merchants with effective management tools.\
 **Technology:** Flutter, Dart, MongoDB/PostgreSQL
+
 For more Project visit my [GitHub](https://github.com/mohtasimbh/)
 
 ## Skills
