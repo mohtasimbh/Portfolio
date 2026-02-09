@@ -213,7 +213,4 @@ Complete infrastructure defined in code:
 - [Latency Analysis Report](#)
 - [Deployment Runbook](#)
 
-```
 
----
-```

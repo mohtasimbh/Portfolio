@@ -338,7 +338,3 @@ Visual workflow builder with code fallback:
 - [Security Whitepaper](#)
 - [Architecture Overview](#)
 
-```
-
----
-```

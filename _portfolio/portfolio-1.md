@@ -125,7 +125,5 @@ The production environment required inference on NVIDIA Jetson AGX Orin modules 
 - [Performance Benchmarks](#)
 - [Case Study PDF](#)
 
-```
 
----
-```
+

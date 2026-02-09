@@ -289,7 +289,3 @@ strategy:
 - [Migration Playbook](#)
 - [Training Materials](#)
 
-```
-
----
-```

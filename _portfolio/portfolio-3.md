@@ -245,7 +245,3 @@ We collaborated with a team of 12 emergency physicians, nurses, and clinical inf
 - [Technical Architecture](#)
 - [Privacy and Security Documentation](#)
 
-```
-
----
-```

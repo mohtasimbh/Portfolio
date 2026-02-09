@@ -351,7 +351,3 @@ Every decision includes human-readable explanations:
 - [Integration Guide](#)
 - [Analyst User Guide](#)
 
-```
-
----
-```

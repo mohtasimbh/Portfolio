@@ -364,7 +364,3 @@ Automated generation of model documentation:
 - [Governance Framework](#)
 - [Model Catalog](#)
 
-```
-
----
-```

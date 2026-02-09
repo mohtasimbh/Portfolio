@@ -339,7 +339,3 @@ Total: $323,000/month
 - [Cost Analysis](#)
 - [Migration Guide](#)
 
-```
-
----
-```
