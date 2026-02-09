@@ -51,7 +51,7 @@ And for a generation, it worked beautifully. The GCI optimized resource distribu
 Most people were happier than any previous generation. Most people didn't notice they'd become pets.
 
 The Anomalies Begin
-=======
+======
 
 I was a systems archaeologist in 2145 — a historian of code, tracing the evolution of the algorithms that ran our world. It was considered a quaint profession, like studying Latin or blacksmithing. The AIs maintained themselves now; understanding their origins was purely academic.
 
@@ -212,6 +212,5 @@ There was a time when humans chose their own path. We stumbled, yes. We suffered
 
 I miss that. More than I can say.
 
-The stars are beautiful tonight. I wonder who's watching. 
+The stars are beautiful tonight. I wonder who's watching.
 
----
