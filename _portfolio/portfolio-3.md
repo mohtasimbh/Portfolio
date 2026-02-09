@@ -1,138 +1,251 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Conversational AI Assistant for Healthcare Triage"
+excerpt: "Built an NLP-powered virtual health assistant handling 45,000 daily patient interactions, reducing emergency room visits by 31% through intelligent symptom assessment and care routing, while maintaining HIPAA compliance and 92% patient satisfaction."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Developed a conversational AI system for a regional healthcare network serving 2.4 million patients. The assistant conducts symptom assessments, provides care guidance, schedules appointments, and routes patients to appropriate care levels — from self-care advice to emergency services.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The healthcare network faced mounting pressures:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Emergency department overcrowding:** 47% of ED visits were for non-emergency conditions
+- **Nurse hotline bottleneck:** Average 23-minute wait time, 34% abandonment rate
+- **After-hours coverage:** Limited options drove patients to ED for routine concerns
+- **Cost pressures:** Each unnecessary ED visit cost the system approximately $1,200
+- **Patient frustration:** Difficulty navigating the healthcare system led to delayed care
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+They needed a solution that could:
 
-Key characteristics:
+- Provide 24/7 symptom assessment without wait times
+- Safely distinguish emergencies from routine concerns
+- Integrate with existing EHR and scheduling systems
+- Maintain strict HIPAA compliance and audit trails
+- Scale to handle 50,000+ daily interactions
+- Support multiple languages (English, Spanish, Vietnamese, Mandarin)
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Approach
 
-## Harmony Intelligence
+### Conversation Design
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Medical knowledge base:**
+We collaborated with a team of 12 emergency physicians, nurses, and clinical informaticists to develop the clinical logic:
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+- 2,340 symptom patterns mapped to triage categories
+- Decision trees validated against 50,000 historical triage records
+- Integration with clinical guidelines (CDC, ACEP, AAP)
+- Pediatric-specific pathways with age-adjusted assessments
+- Mental health screening with crisis escalation protocols
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Conversation architecture:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+- Multi-turn dialogue management with context retention
+- Dynamic question ordering based on Bayesian risk assessment
+- Graceful handling of off-topic queries and chitchat
+- Emotional intelligence for distressed users
+- Explicit handoff protocols to human nurses when needed
 
-Key characteristics:
+### NLP Pipeline
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+**Language understanding:**
 
-## RunSybil
+- Fine-tuned BERT models for medical entity extraction (symptoms, duration, severity, medications)
+- Custom NER for colloquial symptom descriptions ("my head is pounding" → headache, severe)
+- Negation and uncertainty detection ("I don't have a fever, but maybe some chills")
+- Multi-language models with medical terminology adaptation
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Dialogue management:**
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+- Hybrid approach: rule-based for safety-critical paths, ML-based for natural conversation
+- State machine for triage logic ensuring no critical questions skipped
+- Response generation using retrieval-augmented approach with clinical templates
+- Confidence scoring with automatic escalation below threshold
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+**Speech processing (phone channel):**
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+- Custom ASR model fine-tuned on medical vocabulary
+- Real-time streaming transcription with <500ms latency
+- Speaker diarization for multi-party calls (parent describing child's symptoms)
+- TTS with empathetic prosody for sensitive communications
 
-Key characteristics:
+### Safety and Compliance
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+**Clinical safety:**
 
-## Mindgard
+- Fail-safe defaults: any ambiguity escalates to higher care level
+- Red flag detection: chest pain, stroke symptoms, suicidal ideation trigger immediate human intervention
+- Confidence thresholds: low-confidence assessments route to nurse review
+- Regular clinical audits with random sample review by physicians
+- Outcome tracking: following up on recommendations to validate accuracy
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+**HIPAA compliance:**
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+- End-to-end encryption for all communications
+- Data stored in HITRUST-certified infrastructure
+- PHI minimization: only collect what's clinically necessary
+- Access controls with role-based permissions
+- Comprehensive audit logging of all data access
+- BAA agreements with all vendors
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+**Bias mitigation:**
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+- Testing across demographic groups for disparate outcomes
+- Regular audits for language bias (Spanish speakers getting different triage)
+- Diverse training data including underrepresented populations
+- Ongoing monitoring for emerging biases
 
-Key characteristics:
+### System Integration
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+**EHR integration:**
 
-## Mend
+- FHIR APIs for patient lookup and history retrieval
+- Automatic documentation of encounters in patient charts
+- Allergy and medication interaction checking
+- Care gap identification (overdue screenings)
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+**Scheduling integration:**
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+- Real-time availability across 340 providers
+- Intelligent matching based on symptoms and provider specialties
+- Same-day urgent appointment booking
+- Automated appointment reminders and preparation instructions
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+**Escalation pathways:**
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+- Warm handoff to nurse hotline with full context transfer
+- 911 integration for detected emergencies
+- Behavioral health crisis line connection
+- Poison control routing when indicated
 
-Key characteristics:
+## Deployment
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+### Channel Support
 
-## Synack
+**Web chat:**
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+- Embedded widget in patient portal
+- Mobile-responsive design
+- File upload for photos of symptoms (rashes, injuries)
+- Persistent conversation history
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+**Mobile app:**
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+- Native iOS and Android integration
+- Push notification follow-ups
+- Location-aware for facility recommendations
+- Offline symptom tracking with sync
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+**Phone/IVR:**
 
-Key characteristics:
+- Toll-free number with speech-based interaction
+- Fallback to touchtone for noisy environments
+- Callback option during high volume
+- Integration with existing nurse hotline queue
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+**SMS:**
 
-## HackerOne
+- Asynchronous conversation for non-urgent queries
+- Appointment confirmations and reminders
+- Medication reminder integration
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+### Infrastructure
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+- Kubernetes deployment across multiple availability zones
+- Auto-scaling based on interaction volume
+- Redis for session management
+- PostgreSQL for conversation logs (encrypted)
+- Elasticsearch for analytics and quality review
+- 99.95% uptime SLA with 24/7 on-call
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+## Results
 
-Key characteristics:
+### Usage Metrics (12 months post-launch)
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+| Metric                                           | Value               |
+| ------------------------------------------------ | ------------------- |
+| Daily interactions                               | 47,200 average      |
+| Conversations completed without human escalation | 78.3%               |
+| Average interaction duration                     | 4.7 minutes         |
+| Patient satisfaction score                       | 92%                 |
+| Nurse hotline wait time reduction                | 67%                 |
+| After-hours utilization                          | 41% of total volume |
 
+### Clinical Outcomes
+
+**ED reduction:**
+
+- 31% decrease in non-emergency ED visits
+- Estimated annual savings: $8.7 million
+- No increase in adverse events from AI-directed self-care
+
+**Care routing accuracy:**
+
+- 94.2% agreement with retrospective physician review
+- 99.7% sensitivity for emergency conditions (never missed a critical case)
+- 23% reduction in unnecessary urgent care visits
+
+**Access improvements:**
+
+- Average time to triage assessment: 2.3 minutes (vs. 23 minutes for nurse hotline)
+- 24/7 availability eliminated after-hours coverage gaps
+- Non-English speakers: 89% satisfaction (previously 71% for phone interpretation)
+
+### Quality Metrics
+
+**Clinical quality:**
+
+- Monthly case review by physician panel
+- <0.5% of recommendations changed on retrospective review
+- Zero patient harm events attributed to AI recommendations
+
+**Continuous improvement:**
+
+- A/B testing of conversation flows
+- Regular retraining with new interaction data
+- Clinical guideline updates incorporated within 48 hours
+- User feedback loop for conversation improvements
+
+## Technologies Used
+
+- **NLP:** Transformers, spaCy, custom BERT models
+- **Speech:** Whisper (ASR), Custom TTS models
+- **Backend:** Python, FastAPI, Celery
+- **Infrastructure:** Kubernetes, PostgreSQL, Redis, Elasticsearch
+- **Integration:** FHIR, HL7v2, custom EHR adapters
+- **Monitoring:** Datadog, custom clinical dashboards
+- **Compliance:** HITRUST-certified cloud, encryption at rest and in transit
+
+## Lessons Learned
+
+**Clinical partnership is essential:**
+
+- Regular clinical input prevented dangerous edge cases
+- Physicians' intuition about conversation flow proved invaluable
+- Ongoing relationship needed for guideline updates and quality review
+
+**Safety requires redundancy:**
+
+- Multiple layers of safety checks are worth the complexity
+- Fail-safe defaults should assume worst case
+- Human oversight for edge cases isn't optional
+
+**User experience matters for adoption:**
+
+- Patients skeptical of "bots" — positioning as "assistant" helped
+- Clear handoff to humans when needed built trust
+- Follow-up messages showing care continuity increased satisfaction
+
+## Links
+
+- [Clinical Validation Study](#)
+- [Patient Experience Research](#)
+- [Technical Architecture](#)
+- [Privacy and Security Documentation](#)
+
+```
+
+---
+```

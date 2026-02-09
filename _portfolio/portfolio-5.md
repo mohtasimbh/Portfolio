@@ -1,138 +1,307 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Predictive Maintenance System for Industrial IoT"
+excerpt: "Developed an end-to-end predictive maintenance platform analyzing sensor data from 12,000 industrial machines, achieving 94% accuracy in failure prediction 72 hours in advance, reducing unplanned downtime by 67% and maintenance costs by $4.2M annually."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Created a comprehensive predictive maintenance solution for a global manufacturing conglomerate operating across 23 facilities worldwide. The system ingests real-time sensor data from industrial equipment, applies machine learning models to predict failures, and integrates with maintenance management systems to automate work order generation.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The client operated critical manufacturing equipment with significant costs associated with failures:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Unplanned downtime:** Average 847 hours monthly across all facilities, costing $127K per hour
+- **Reactive maintenance:** 73% of maintenance was reactive (fix after failure)
+- **Spare parts inventory:** $34M tied up in "just in case" inventory
+- **Safety incidents:** 12 injuries annually related to equipment failures
+- **Maintenance scheduling:** Inefficient time-based maintenance regardless of actual condition
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Goals for the new system:
 
-Key characteristics:
+- Predict failures 48-72 hours in advance with >90% accuracy
+- Reduce unplanned downtime by 50%
+- Enable condition-based maintenance
+- Optimize spare parts inventory
+- Integrate with existing SAP PM and SCADA systems
+- Deploy across diverse equipment types (CNC machines, conveyors, HVAC, compressors)
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### Data Collection Layer
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Sensor infrastructure:**
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+- 847,000 sensors across 12,000 machines
+- Sensor types: vibration, temperature, pressure, current, flow, acoustic
+- Sampling rates: 1 Hz (temperature) to 50 kHz (vibration)
+- Edge gateways aggregating and preprocessing data
+- Industrial protocols: Modbus, OPC-UA, MQTT, Profinet
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Edge processing:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+- NVIDIA Jetson devices at each facility
+- Local preprocessing: filtering, downsampling, feature extraction
+- Anomaly detection at edge for immediate alerts
+- Data compression (10:1) for efficient transmission
+- Store-and-forward for connectivity resilience
 
-Key characteristics:
+**Data ingestion:**
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+- Apache Kafka for real-time streaming
+- Kafka Connect for protocol adaptation
+- Schema Registry for data governance
+- Exactly-once semantics for data integrity
 
-## RunSybil
+### Data Platform
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Time-series storage:**
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+- TimescaleDB for structured sensor data
+- Configurable retention policies (hot/warm/cold)
+- Continuous aggregations for dashboard queries
+- Compression achieving 20:1 for historical data
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+**Feature store:**
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+- Feast for ML feature management
+- Offline store for training (Parquet on S3)
+- Online store for inference (Redis)
+- Point-in-time correct feature retrieval
+- Feature versioning and lineage
 
-Key characteristics:
+**Data lake:**
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+- Delta Lake for raw data preservation
+- Schema evolution handling
+- Time travel for reproducibility
+- GDPR-compliant data retention
 
-## Mindgard
+### Machine Learning Pipeline
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+**Feature engineering:**
+Extensive domain-specific feature extraction:
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+_Time domain:_
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+- Statistical moments (mean, variance, skewness, kurtosis)
+- Peak-to-peak amplitude
+- RMS values
+- Crest factor
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+_Frequency domain:_
 
-Key characteristics:
+- FFT-based spectral features
+- Dominant frequencies and harmonics
+- Spectral entropy
+- Band power in characteristic ranges
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+_Time-frequency:_
 
-## Mend
+- Wavelet decomposition features
+- Short-time Fourier transform
+- Hilbert-Huang transform for non-stationary signals
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+_Cross-sensor:_
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+- Correlation between related sensors
+- Phase relationships
+- Causal relationships (Granger causality)
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+**Model architecture:**
+Ensemble approach combining multiple techniques:
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+_LSTM networks:_
 
-Key characteristics:
+- Capture long-term temporal dependencies
+- Separate models for each equipment class
+- Attention mechanisms for interpretability
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+_Gradient boosting:_
 
-## Synack
+- XGBoost on engineered features
+- Fast inference for real-time scoring
+- Feature importance for explainability
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+_Isolation forests:_
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+- Unsupervised anomaly detection
+- Novel failure mode discovery
+- Complement to supervised models
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+_Survival analysis:_
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+- Remaining useful life estimation
+- Cox proportional hazards model
+- Weibull distribution fitting
 
-Key characteristics:
+**Model training:**
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+- MLflow for experiment tracking
+- Hyperparameter optimization with Optuna
+- Cross-validation respecting temporal ordering
+- Class imbalance handling (SMOTE, class weights)
+- Regular retraining with new failure data
 
-## HackerOne
+**Inference pipeline:**
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+- Real-time scoring every 5 minutes
+- Batch predictions for maintenance planning
+- A/B testing framework for model updates
+- Automatic fallback on model degradation
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+### Alert and Integration
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+**Alert management:**
 
-Key characteristics:
+- Risk scoring on 0-100 scale
+- Configurable thresholds by equipment criticality
+- Alert routing based on severity and equipment
+- Escalation procedures for unacknowledged alerts
+- Mobile app for maintenance technicians
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+**SAP PM integration:**
 
+- Automatic work order creation
+- Parts list attachment based on predicted failure mode
+- Scheduling optimization considering production plans
+- Completion feedback loop for model improvement
+
+**Visualization:**
+
+- Grafana dashboards for operations
+- PowerBI for executive reporting
+- Custom React application for maintenance planners
+- Mobile-responsive design for floor use
+
+## Deployment
+
+### Rollout Strategy
+
+**Pilot phase (3 months):**
+
+- Single facility, 40 critical machines
+- Model validation against actual failures
+- Process integration with maintenance team
+- Threshold tuning based on feedback
+
+**Expansion phase (6 months):**
+
+- Roll out to 8 facilities
+- Equipment class coverage expansion
+- Integration refinements
+- Training for all maintenance teams
+
+**Global deployment (6 months):**
+
+- Remaining facilities
+- 24/7 support model establishment
+- Continuous improvement process
+- Center of excellence creation
+
+### Infrastructure
+
+**Cloud architecture:**
+
+- AWS primary deployment
+- Multi-region for global facilities
+- Edge-cloud hybrid for low latency
+- VPN connectivity to plant networks
+
+**Reliability:**
+
+- 99.9% platform availability
+- Graceful degradation during cloud outages
+- Local alerting continues independently
+- Disaster recovery with 4-hour RTO
+
+## Results
+
+### Prediction Performance
+
+| Equipment Type | Accuracy | Precision | Recall | Lead Time |
+| -------------- | -------- | --------- | ------ | --------- |
+| CNC Machines   | 94.2%    | 89.1%     | 91.7%  | 73 hours  |
+| Conveyors      | 91.8%    | 86.3%     | 88.9%  | 68 hours  |
+| Compressors    | 96.1%    | 92.4%     | 94.2%  | 82 hours  |
+| HVAC Systems   | 89.4%    | 84.7%     | 86.1%  | 54 hours  |
+| Pumps          | 93.7%    | 88.9%     | 90.3%  | 71 hours  |
+
+### Business Impact
+
+**Downtime reduction:**
+
+- Unplanned downtime reduced 67% (847 hours → 280 hours monthly)
+- Production availability increased from 91.2% to 97.8%
+- Estimated annual value: $8.7M
+
+**Maintenance efficiency:**
+
+- Reactive maintenance reduced from 73% to 24%
+- Wrench time improved 34% (less diagnosis, more repair)
+- Overtime reduced 42%
+
+**Inventory optimization:**
+
+- Spare parts inventory reduced 28% ($9.4M freed)
+- Stockout incidents reduced 89%
+- Just-in-time parts ordering enabled
+
+**Safety improvements:**
+
+- Equipment-related injuries reduced from 12 to 2 annually
+- Near-miss events reduced 61%
+
+### ROI
+
+- Total investment: $3.2M (platform + deployment + training)
+- Annual savings: $12.4M (downtime + maintenance + inventory)
+- Payback period: 3.1 months
+- 5-year NPV: $47M
+
+## Technologies Used
+
+- **Data Ingestion:** Apache Kafka, Kafka Connect, MQTT
+- **Storage:** TimescaleDB, Delta Lake, Redis
+- **ML Platform:** MLflow, Feast, Optuna
+- **Models:** PyTorch, XGBoost, scikit-learn
+- **Processing:** Apache Spark, Dask
+- **Orchestration:** Apache Airflow, Kubernetes
+- **Visualization:** Grafana, PowerBI, React
+- **Edge:** NVIDIA Jetson, AWS Greengrass
+
+## Lessons Learned
+
+**Domain expertise is critical:**
+
+- Partnered with reliability engineers from day one
+- Their feature ideas outperformed automated feature engineering
+- Physical understanding guided model architecture
+- Ongoing collaboration for model refinement
+
+**Start with the business process:**
+
+- Technology is easy; process change is hard
+- Early maintenance team involvement built trust
+- Workflow integration before algorithm optimization
+- Celebrate early wins to build momentum
+
+**Data quality over quantity:**
+
+- Labeled failure data was scarce and precious
+- Invested heavily in failure forensics for labeling
+- Synthetic data helped but couldn't replace real failures
+- Feedback loops from maintenance essential
+
+## Links
+
+- [Technical Architecture](#)
+- [Model Performance Reports](#)
+- [ROI Analysis](#)
+- [Deployment Playbook](#)
+
+```
+
+---
+```

@@ -1,138 +1,345 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Serverless Data Pipeline for Real-Time Analytics"
+excerpt: "Architected a fully serverless data platform processing 2.8 billion events daily with 99.99% reliability, enabling real-time dashboards and alerts while reducing infrastructure costs by 73% compared to the previous Spark cluster approach."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Designed and implemented a serverless data pipeline for a SaaS company with 23 million active users, replacing their overprovisioned Spark infrastructure. The platform ingests application events, transforms them in real-time, and powers analytics dashboards, ML feature computation, and automated alerting.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The existing data infrastructure was costly and inflexible:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Infrastructure costs:** $1.2M monthly for always-on Spark clusters
+- **Utilization:** Average cluster utilization only 23%
+- **Latency:** 15-minute minimum for data availability in dashboards
+- **Reliability:** Weekly incidents due to cluster management complexity
+- **Scalability:** Manual intervention required for traffic spikes
+- **Team burden:** 3 FTEs dedicated to cluster operations
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Requirements:
 
-Key characteristics:
+- Reduce infrastructure costs by 50%+
+- Real-time data availability (<1 minute latency)
+- Zero operational overhead for scaling
+- 99.9% reliability SLA
+- Support 5B events/day peak capacity
+- Enable self-service analytics for product teams
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### Event Ingestion
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Collection layer:**
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+- SDK integration in web, iOS, Android applications
+- Batched transmission (configurable batch size and interval)
+- Client-side retry with exponential backoff
+- Offline queuing for network interruptions
+- Schema validation at collection point
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Ingestion API:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+- AWS API Gateway with Lambda authorizer
+- Request validation and enrichment
+- Kinesis Data Streams as buffer
+- Multi-region deployment for latency
+- Rate limiting and abuse protection
 
-Key characteristics:
+**Scale characteristics:**
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+- 2.8 billion events/day average
+- 5.2 billion events/day peak (Black Friday)
+- 47,000 events/second peak throughput
+- 99.99% ingestion success rate
 
-## RunSybil
+### Stream Processing
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Real-time transformation:**
+AWS Lambda consumers on Kinesis streams:
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+```python
+# Simplified event processing
+def process_event(event):
+    # Parse and validate
+    parsed = parse_event(event)
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+    # Enrich with user context
+    enriched = enrich_user_data(parsed)
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+    # Compute derived fields
+    transformed = compute_derivatives(enriched)
 
-Key characteristics:
+    # Route to appropriate destinations
+    route_event(transformed)
+```
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+**Processing stages:**
 
-## Mindgard
+1. **Parsing:** Decode and validate event schema
+2. **Enrichment:** Add user attributes, session context, geo data
+3. **Transformation:** Compute derived metrics, sessionization
+4. **Aggregation:** Update real-time counters and rollups
+5. **Routing:** Send to appropriate downstream systems
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+**Lambda configuration:**
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+- Provisioned concurrency for consistent latency
+- Reserved concurrency limits per function
+- Error handling with DLQ
+- Automatic retry with backoff
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+### Storage Layer
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+**Real-time store (hot):**
 
-Key characteristics:
+- Amazon DynamoDB for latest state
+- Single-digit millisecond reads
+- TTL for automatic expiration
+- Global tables for multi-region
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+**Time-series store (warm):**
 
-## Mend
+- Amazon Timestream for metrics
+- Automatic tiering (memory → magnetic)
+- SQL query interface
+- Built-in analytics functions
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+**Data lake (cold):**
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+- S3 with Parquet format
+- Partitioned by date and event type
+- Iceberg table format for ACID transactions
+- 3-year retention with lifecycle policies
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+### Query Layer
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+**Real-time dashboards:**
 
-Key characteristics:
+- WebSocket API for live updates
+- Lambda functions computing metrics on-demand
+- Redis caching for expensive computations
+- Pre-aggregated metrics for common queries
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+**Ad-hoc analytics:**
 
-## Synack
+- Amazon Athena on S3 data lake
+- Partition pruning for query efficiency
+- Query result caching
+- Workgroup-based cost allocation
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+**Embedded analytics:**
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+- QuickSight embedded dashboards
+- Row-level security based on customer
+- Scheduled reports to email
+- Export to CSV/Excel
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+### Alerting and Automation
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+**Metric monitoring:**
 
-Key characteristics:
+- CloudWatch metrics from Lambda
+- Custom metrics published from processing
+- Composite alarms for complex conditions
+- SNS for alert distribution
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+**Anomaly detection:**
 
-## HackerOne
+- Statistical baseline computation
+- Real-time comparison to baseline
+- Automatic threshold adjustment
+- Seasonality awareness (hourly, daily, weekly)
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+**Automated actions:**
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+- Lambda-triggered remediation
+- Slack/PagerDuty integration
+- Automated runbook execution
+- Customer notification workflows
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+## Cost Optimization
 
-Key characteristics:
+### Pay-per-use Model
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+**Before (Spark cluster):**
 
+```
+EMR cluster (always-on): $890,000/month
+S3 storage: $145,000/month
+Data transfer: $165,000/month
+---
+Total: $1,200,000/month
+```
+
+**After (serverless):**
+
+```
+Lambda execution: $47,000/month
+Kinesis: $23,000/month
+DynamoDB: $89,000/month
+S3 + Athena: $112,000/month
+Other services: $52,000/month
+---
+Total: $323,000/month
+```
+
+**Savings: $877,000/month (73%)**
+
+### Optimization Techniques
+
+**Lambda:**
+
+- Right-sized memory allocation (power tuning)
+- ARM64 architecture (Graviton2)
+- Provisioned concurrency only where needed
+- Code optimization for cold start reduction
+
+**DynamoDB:**
+
+- On-demand capacity for variable workloads
+- DAX caching for read-heavy patterns
+- TTL to reduce storage costs
+- Efficient key design to minimize read costs
+
+**S3:**
+
+- Intelligent tiering for uncertain access patterns
+- Lifecycle policies for automatic transitions
+- Parquet compression reducing storage 8x
+- Athena query optimization reducing scan costs
+
+## Reliability Engineering
+
+### Fault Tolerance
+
+**Kinesis resilience:**
+
+- Multi-AZ data replication
+- 7-day retention for replay capability
+- Enhanced fan-out for parallel consumers
+- Dead letter queue for failed records
+
+**Lambda resilience:**
+
+- Automatic retry with backoff
+- Function-level error handling
+- Circuit breaker pattern for dependencies
+- Fallback to degraded mode
+
+**Cross-region:**
+
+- Active-passive configuration
+- Route 53 health checks
+- Automated failover
+- Data replication via S3 CRR
+
+### Observability
+
+**Metrics:**
+
+- CloudWatch dashboards for operations
+- Custom metrics for business KPIs
+- X-Ray tracing for latency analysis
+- Contributor Insights for debugging
+
+**Logging:**
+
+- Structured JSON logging
+- CloudWatch Logs with Insights
+- Log retention policies
+- Automated error detection
+
+**Alerting:**
+
+- PagerDuty integration
+- Escalation policies
+- Runbook links in alerts
+- Post-incident automation
+
+## Results
+
+### Performance Metrics
+
+| Metric                  | Before     | After       |
+| ----------------------- | ---------- | ----------- |
+| Data latency            | 15 minutes | 47 seconds  |
+| Ingestion reliability   | 99.7%      | 99.99%      |
+| Query performance (p50) | 12 seconds | 1.8 seconds |
+| Dashboard refresh       | Manual     | Real-time   |
+| Incident frequency      | Weekly     | Monthly     |
+
+### Operational Improvements
+
+| Metric                         | Before | After              |
+| ------------------------------ | ------ | ------------------ |
+| Infrastructure management FTEs | 3      | 0.5                |
+| Deployment frequency           | Weekly | Multiple daily     |
+| Scaling intervention           | Manual | Automatic          |
+| Cost variability               | Fixed  | Usage-proportional |
+
+### Business Impact
+
+**Cost savings:**
+
+- Annual infrastructure savings: $10.5M
+- Team reallocation to product work: 2.5 FTEs
+
+**Product improvements:**
+
+- Real-time analytics enabled new features
+- Customer-facing dashboards with live data
+- Proactive alerting reduced customer-reported issues 67%
+
+**Developer productivity:**
+
+- Self-service data access for product teams
+- Schema evolution without downtime
+- Experimentation with new metrics cost-effective
+
+## Technologies Used
+
+- **Ingestion:** API Gateway, Kinesis Data Streams
+- **Processing:** AWS Lambda (Python, Node.js)
+- **Storage:** DynamoDB, Timestream, S3, Iceberg
+- **Query:** Athena, QuickSight
+- **Observability:** CloudWatch, X-Ray
+- **Infrastructure:** Terraform, AWS CDK
+- **CI/CD:** GitHub Actions, AWS SAM
+
+## Lessons Learned
+
+**Serverless isn't zero-ops:**
+
+- Observability requires investment
+- Cost monitoring essential
+- Capacity planning still needed (limits exist)
+- Debugging distributed systems is hard
+
+**Design for failure:**
+
+- Every component will fail eventually
+- DLQ and retry logic from day one
+- Idempotency in all transformations
+- Graceful degradation over hard failure
+
+**Start simple, optimize later:**
+
+- Initial design was intentionally naive
+- Profiled production before optimizing
+- Optimizations based on data, not intuition
+- Cost optimization ongoing, not one-time
+
+## Links
+
+- [Architecture Documentation](#)
+- [Runbook](#)
+- [Cost Analysis](#)
+- [Migration Guide](#)
+
+```
+
+---
+```

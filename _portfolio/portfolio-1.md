@@ -1,138 +1,131 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Neural Network-Based Real-Time Object Detection System"
+excerpt: "A high-performance computer vision system capable of detecting and tracking multiple objects in real-time video streams with 94% accuracy, deployed on edge devices for industrial quality control applications."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Developed a production-ready object detection system that processes live video feeds at 60 FPS while maintaining high accuracy across diverse lighting conditions and object orientations. The system was designed for manufacturing quality control, identifying defective products on high-speed assembly lines before they reach packaging.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+Our client, a major electronics manufacturer, was losing approximately $2.3 million annually to defective products reaching customers. Their existing manual inspection process caught only 73% of defects, with human inspectors fatiguing after 2-3 hours of continuous work. They needed a solution that could:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- Process 120 units per minute on multiple assembly lines
+- Detect 47 distinct defect types across 12 product categories
+- Operate 24/7 without performance degradation
+- Deploy on edge devices without cloud connectivity (air-gapped facility)
+- Integrate with existing PLCs and rejection mechanisms
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+## Technical Approach
 
-Key characteristics:
+### Architecture Selection
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+After benchmarking multiple architectures, we selected a modified YOLOv8 backbone with custom attention mechanisms optimized for small defect detection. Key modifications included:
 
-## Harmony Intelligence
+- **Multi-scale feature pyramid network** with five output scales instead of the standard three, enabling detection of defects as small as 0.5mm
+- **Deformable convolutions** in the backbone to handle varying object orientations without data augmentation overhead
+- **Channel attention modules** that learned to focus on subtle texture differences indicating defects
+- **Knowledge distillation** from a larger teacher model to maintain accuracy while reducing inference time
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+### Training Pipeline
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+Data collection and annotation presented significant challenges:
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Dataset creation:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+- Captured 2.3 million images over 6 months from production lines
+- Partnered with quality control experts to annotate 180,000 images with bounding boxes and defect classifications
+- Implemented active learning to prioritize annotation of edge cases and rare defects
+- Generated synthetic defects using GANs to augment underrepresented categories
 
-Key characteristics:
+**Training infrastructure:**
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+- Distributed training across 8 NVIDIA A100 GPUs using PyTorch DDP
+- Mixed-precision training with gradient accumulation for effective batch sizes of 256
+- Custom learning rate schedules with warm restarts for each defect category
+- Online hard example mining to focus training on difficult cases
 
-## RunSybil
+### Edge Deployment
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+The production environment required inference on NVIDIA Jetson AGX Orin modules without cloud connectivity:
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+**Optimization pipeline:**
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+- Quantization-aware training to INT8 precision with minimal accuracy loss (0.3% mAP degradation)
+- TensorRT optimization with layer fusion and kernel auto-tuning
+- Custom CUDA kernels for preprocessing operations
+- Multi-stream inference to maximize GPU utilization
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+**Deployment architecture:**
 
-Key characteristics:
+- Containerized application using Docker with NVIDIA runtime
+- Redis for inter-process communication between camera streams
+- SQLite for local logging and analytics
+- Modbus TCP for PLC integration and rejection triggering
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+## Results
 
-## Mindgard
+### Performance Metrics
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+| Metric                       | Before       | After         |
+| ---------------------------- | ------------ | ------------- |
+| Defect Detection Rate        | 73%          | 97.2%         |
+| False Positive Rate          | 8.1%         | 1.3%          |
+| Processing Speed             | 45 units/min | 147 units/min |
+| Inspection Coverage          | 3 lines      | 12 lines      |
+| Annual Defect-Related Losses | $2.3M        | $180K         |
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+### Technical Achievements
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+- **Inference speed:** 16.7ms per frame (60 FPS) on Jetson AGX Orin
+- **Model size:** 23MB quantized (down from 187MB FP32)
+- **Latency:** Camera-to-rejection trigger in under 50ms
+- **Uptime:** 99.97% over 18 months of operation
+- **Accuracy:** 94.3% mAP@0.5, 89.1% mAP@0.5:0.95
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+### Business Impact
 
-Key characteristics:
+- ROI achieved in 4.7 months
+- Enabled expansion of quality guarantee program
+- Reduced customer returns by 89%
+- Redeployed 23 quality inspectors to higher-value roles
+- System licensed to two partner facilities
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+## Technologies Used
 
-## Mend
+- **Deep Learning:** PyTorch, TensorRT, ONNX
+- **Computer Vision:** OpenCV, CUDA, cuDNN
+- **Edge Computing:** NVIDIA Jetson, Docker, Kubernetes
+- **Data Pipeline:** Apache Kafka, Redis, PostgreSQL
+- **Monitoring:** Prometheus, Grafana, custom alerting
+- **Languages:** Python, C++, CUDA
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+## Lessons Learned
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+**What worked well:**
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+- Early involvement of domain experts in annotation and validation
+- Iterative deployment starting with single line before scaling
+- Comprehensive monitoring from day one
+- Building synthetic data generation early in the project
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+**What we'd do differently:**
 
-Key characteristics:
+- Start quantization-aware training earlier (not as post-processing)
+- Build more robust data versioning from the beginning
+- Create better tooling for production debugging
+- More extensive failure mode testing before deployment
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+## Links
 
-## Synack
+- [Technical Documentation](#)
+- [System Architecture Diagram](#)
+- [Performance Benchmarks](#)
+- [Case Study PDF](#)
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+```
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
-
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
-
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
-
-Key characteristics:
-
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
-
-## HackerOne
-
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
-
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
-
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
-
-Key characteristics:
-
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
-
+---
+```

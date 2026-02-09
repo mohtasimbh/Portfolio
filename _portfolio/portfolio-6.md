@@ -1,138 +1,357 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Real-Time Fraud Detection Engine for Digital Payments"
+excerpt: "Built a machine learning-powered fraud detection system processing 23,000 transactions per second with sub-50ms latency, blocking $127M in annual fraud while maintaining 99.7% legitimate transaction approval rate and adapting to emerging fraud patterns in real-time."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Developed an enterprise fraud detection platform for a major payment processor handling 2 billion transactions monthly. The system evaluates every transaction in real-time, applying hundreds of rules and ML models to distinguish legitimate purchases from fraud, while minimizing false positives that frustrate customers.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The client faced escalating fraud losses and customer friction:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Fraud losses:** $156M annually in chargebacks and fraud reimbursements
+- **False positives:** 3.2% of legitimate transactions declined, causing $89M in lost revenue
+- **Customer friction:** Average of 4.7 unnecessary challenges per customer annually
+- **Detection latency:** 340ms average decision time, causing checkout abandonment
+- **Adaptability:** New fraud patterns took 6-8 weeks to address with rule updates
+- **Regulatory pressure:** PSD2 SCA requirements demanding risk-based authentication
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Requirements:
 
-Key characteristics:
+- Process 25,000+ transactions per second at peak
+- Decision latency under 50ms (p99)
+- Reduce fraud losses by 40%+ without increasing false positives
+- Adapt to new patterns within hours, not weeks
+- Support explainable decisions for regulatory compliance
+- Handle multiple payment types (card-present, card-not-present, ACH, real-time payments)
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### Real-Time Decision Engine
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Transaction flow:**
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+1. Transaction received via API gateway
+2. Feature enrichment from multiple sources (parallel)
+3. Rule engine evaluation
+4. ML model inference
+5. Score aggregation and decision
+6. Response returned to merchant
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**All within 50ms budget.**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+**Feature enrichment:**
+Parallel lookups to enrich raw transaction with context:
 
-Key characteristics:
+_Customer features:_
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+- Historical transaction patterns (velocity, typical amounts, merchants)
+- Device fingerprint matching
+- Behavioral biometrics (if available)
+- Account age and history
 
-## RunSybil
+_Merchant features:_
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+- Merchant risk profile
+- Industry-specific fraud rates
+- Historical chargeback rates
+- Geographic risk factors
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+_Transaction features:_
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+- Distance from last transaction
+- Time since last transaction
+- Amount deviation from typical
+- Cross-border indicators
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+_External data:_
 
-Key characteristics:
+- BIN database (card issuer, country, type)
+- IP geolocation and proxy detection
+- Email reputation scores
+- Phone number verification
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+**Low-latency data stores:**
 
-## Mindgard
+- Redis Cluster for customer profiles (sub-millisecond reads)
+- Aerospike for historical patterns (P99 < 1ms)
+- In-memory feature cache with background refresh
+- Fallback defaults when lookups timeout
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+### Rule Engine
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+**Velocity rules:**
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+- Transaction count limits (per hour, day, week)
+- Amount thresholds (single and cumulative)
+- Unique merchant/country/device counts
+- Configurable by customer segment
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+**Pattern rules:**
 
-Key characteristics:
+- Geographic impossibility (two countries within impossible time)
+- Card testing patterns (small amounts, sequential failures)
+- Known fraud indicators (high-risk MCCs, BINs)
+- Anomaly thresholds from ML models
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+**Rule management:**
 
-## Mend
+- Business users configure rules via UI
+- Version control for all changes
+- A/B testing framework for new rules
+- Automatic rollback on performance degradation
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+### Machine Learning Models
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+**Model ensemble:**
+Multiple specialized models combined for robust detection:
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+_Gradient boosting (primary):_
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+- XGBoost trained on 2 years of labeled transactions
+- 847 features including engineered and raw
+- Updated weekly with new fraud patterns
+- Fast inference (<5ms)
 
-Key characteristics:
+_Neural network (patterns):_
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+- LSTM for sequential transaction patterns
+- Captures behavioral anomalies
+- Particularly effective for account takeover
+- Runs asynchronously with timeout
 
-## Synack
+_Isolation forest (anomalies):_
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+- Unsupervised detection of novel patterns
+- Catches attacks not seen in training
+- Low precision but valuable signal
+- Helps identify emerging fraud types
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+_Graph neural network (networks):_
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+- Detects coordinated fraud rings
+- Models relationships between cards, devices, merchants
+- Runs offline, features served in real-time
+- Particularly effective for bust-out fraud
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+**Score aggregation:**
 
-Key characteristics:
+```python
+final_score = (
+    0.45 * xgboost_score +
+    0.25 * lstm_score +
+    0.15 * isolation_score +
+    0.10 * gnn_score +
+    0.05 * rule_score
+)
+```
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+Weights tuned through A/B testing on live traffic.
 
-## HackerOne
+**Model training pipeline:**
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+- Daily retraining with new labeled data
+- Champion/challenger model deployment
+- Automatic promotion based on performance metrics
+- Canary rollout (1% → 10% → 50% → 100%)
+- Rollback triggers on KPI degradation
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+### Adaptive Learning
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+**Feedback loops:**
 
-Key characteristics:
+- Confirmed fraud (chargebacks) labeled within 24 hours
+- Confirmed legitimate (successful delivery) labeled within 7 days
+- Manual review labels incorporated immediately
+- Velocity of feedback incorporation: 4 hours
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+**Emerging pattern detection:**
 
+- Clustering on declined transactions to find new attack vectors
+- Anomaly detection on model confidence distributions
+- Automatic alert when novel patterns exceed threshold
+- Rapid rule deployment for immediate mitigation
+
+**Continuous model updating:**
+
+- Online learning layer for immediate adaptation
+- Full retraining for structural pattern changes
+- Feature importance monitoring for drift detection
+- Automatic retraining triggered by performance degradation
+
+### Explainability
+
+**Decision reasons:**
+Every decision includes human-readable explanations:
+
+- Top contributing factors (SHAP values)
+- Triggered rules with descriptions
+- Comparison to typical customer behavior
+- Confidence level and recommendation
+
+**Regulatory compliance:**
+
+- Full audit trail for every decision
+- Customer dispute support with explanation retrieval
+- Analyst investigation tools
+- GDPR-compliant data handling
+
+**Analyst tools:**
+
+- Case management interface
+- Similar transaction lookup
+- Customer history visualization
+- Rule simulation sandbox
+
+## Infrastructure
+
+### High-Availability Design
+
+**Compute:**
+
+- Kubernetes deployment across 3 availability zones
+- Active-active configuration
+- Automatic pod scaling based on queue depth
+- Reserved capacity for peak periods
+
+**Data stores:**
+
+- Redis Cluster with replication
+- Aerospike with strong consistency
+- Multi-region replication for DR
+- Automatic failover tested weekly
+
+**Traffic management:**
+
+- Geographic load balancing
+- Health-check based routing
+- Circuit breakers for degraded dependencies
+- Graceful degradation with cached decisions
+
+### Performance Optimization
+
+**Latency budget allocation:**
+| Component | Budget | Actual (P99) |
+|-----------|--------|--------------|
+| Network/routing | 5ms | 3.2ms |
+| Feature enrichment | 20ms | 16.8ms |
+| Rule evaluation | 5ms | 2.1ms |
+| ML inference | 15ms | 11.4ms |
+| Response | 5ms | 2.9ms |
+| **Total** | **50ms** | **36.4ms** |
+
+**Optimizations applied:**
+
+- Feature lookups parallelized
+- Model compiled with ONNX Runtime
+- Connection pooling for all external calls
+- Aggressive timeout management
+- Hot-path code profiled and optimized
+
+### Monitoring
+
+**Real-time dashboards:**
+
+- Transaction throughput and latency
+- Fraud rate and false positive rate
+- Model performance metrics
+- System health indicators
+
+**Alerting:**
+
+- Latency degradation
+- Error rate spikes
+- Fraud rate anomalies
+- Model drift detection
+
+**Analytics:**
+
+- Fraud pattern analysis
+- Customer segment performance
+- Merchant risk profiling
+- Attack vector trending
+
+## Results
+
+### Detection Performance
+
+| Metric                  | Before    | After     |
+| ----------------------- | --------- | --------- |
+| Fraud detection rate    | 67%       | 91%       |
+| False positive rate     | 3.2%      | 0.9%      |
+| Decision latency (P99)  | 340ms     | 47ms      |
+| Emerging fraud response | 6-8 weeks | 4-6 hours |
+
+### Business Impact
+
+**Fraud reduction:**
+
+- Annual fraud losses reduced from $156M to $54M
+- Net fraud savings: $102M annually
+- Detection rate improved 36% (67% → 91%)
+
+**Customer experience:**
+
+- False positive rate reduced 72% (3.2% → 0.9%)
+- Recovered revenue from prevented false declines: $67M
+- Customer friction events reduced 81%
+
+**Operational efficiency:**
+
+- Manual review volume reduced 63%
+- Analyst productivity improved 4.2x
+- Time to address new fraud patterns: 6 weeks → 4 hours
+
+### ROI
+
+- Platform investment: $8.2M
+- Annual benefit: $169M (fraud savings + recovered revenue + efficiency)
+- Payback period: 18 days
+
+## Technologies Used
+
+- **Real-Time Processing:** Apache Kafka, Apache Flink
+- **Storage:** Redis Cluster, Aerospike, PostgreSQL
+- **ML Platform:** MLflow, ONNX Runtime, XGBoost, PyTorch
+- **Rule Engine:** Custom Rust implementation
+- **Infrastructure:** Kubernetes, Istio, AWS
+- **Monitoring:** Prometheus, Grafana, custom dashboards
+- **Languages:** Python, Rust, Go
+
+## Lessons Learned
+
+**Latency is a feature:**
+
+- Every millisecond of latency costs merchant conversion
+- Invested heavily in optimization from day one
+- Parallel processing essential for feature enrichment
+- Timeout handling as important as happy path
+
+**False positives matter more than detection:**
+
+- Customers remember declined transactions
+- Merchants leave over excessive friction
+- Precision often more valuable than recall
+- Segment-specific thresholds essential
+
+**Fraud evolves continuously:**
+
+- Static models decay within weeks
+- Investment in adaptability, not just accuracy
+- Feedback loops are infrastructure, not nice-to-have
+- Anomaly detection catches what supervised learning misses
+
+## Links
+
+- [Technical Architecture](#)
+- [Model Performance Metrics](#)
+- [Integration Guide](#)
+- [Analyst User Guide](#)
+
+```
+
+---
+```

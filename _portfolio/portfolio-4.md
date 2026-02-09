@@ -1,138 +1,295 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Kubernetes-Native CI/CD Platform with GitOps"
+excerpt: "Designed and implemented an enterprise-grade continuous delivery platform supporting 340 development teams, reducing deployment time from 4 hours to 12 minutes while achieving 99.9% deployment success rate through automated testing, progressive rollouts, and self-healing infrastructure."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Built a comprehensive CI/CD platform for a Fortune 500 financial services company, transforming their software delivery capabilities. The platform manages 1,200+ microservices across development, staging, and production environments, with full GitOps-driven automation and enterprise-grade security controls.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The organization's existing deployment process was painful:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Speed:** Average 4-hour deployment window, requiring change advisory board approval
+- **Reliability:** 23% of deployments required rollback
+- **Toil:** Each deployment involved 47 manual steps documented in a 30-page runbook
+- **Visibility:** No single view of what was deployed where
+- **Bottleneck:** Central release team of 8 people couldn't scale to meet demand
+- **Compliance:** Manual evidence collection for SOX/PCI audits taking weeks
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Requirements for the new platform:
 
-Key characteristics:
+- Self-service deployments without central team bottleneck
+- Deployment time under 15 minutes for standard changes
+- Automated compliance evidence collection
+- Zero-downtime deployments with automatic rollback
+- Full audit trail for regulatory requirements
+- Support for 340 development teams with varying skill levels
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### GitOps Foundation
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Single source of truth:**
+All deployment configuration lives in Git repositories:
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+- Application manifests (Kubernetes YAML, Helm charts)
+- Environment-specific overlays (Kustomize)
+- Infrastructure definitions (Terraform)
+- Policy definitions (OPA Rego)
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Reconciliation loop:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+- Argo CD continuously compares desired state (Git) with actual state (cluster)
+- Drift detection alerts when manual changes occur
+- Automatic sync with configurable approval gates
+- Multi-cluster management from centralized control plane
 
-Key characteristics:
+### Pipeline Architecture
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+**Build stage:**
 
-## RunSybil
+- Triggered by Git push or pull request
+- Containerized builds using Kaniko (no Docker daemon dependency)
+- Parallel test execution with intelligent test selection
+- Security scanning: SAST (Semgrep), SCA (Snyk), container scanning (Trivy)
+- Build artifacts stored in Artifactory with immutable tags
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Promotion workflow:**
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+- Pull request to environment branch triggers promotion
+- Automatic environment provisioning for PR previews
+- Integration test suites executed against preview environments
+- Required approvals based on change risk classification
+- Automatic ticket creation and compliance documentation
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+**Deployment stage:**
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+- Argo CD syncs approved changes to target cluster
+- Progressive rollout using Argo Rollouts
+- Automatic canary analysis with Prometheus metrics
+- Rollback triggered by SLO violations
+- Post-deployment verification tests
 
-Key characteristics:
+### Progressive Delivery
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+**Canary deployments:**
 
-## Mindgard
+```yaml
+strategy:
+  canary:
+    steps:
+      - setWeight: 5
+      - pause: { duration: 5m }
+      - analysis:
+          templates:
+            - templateName: success-rate
+            - templateName: latency-p99
+      - setWeight: 25
+      - pause: { duration: 10m }
+      - analysis: ...
+      - setWeight: 50
+      - pause: { duration: 15m }
+      - setWeight: 100
+```
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+**Blue-green for critical services:**
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+- Full parallel deployment before traffic switch
+- Instant rollback capability
+- Database migration coordination
+- Session affinity handling
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+**Feature flags integration:**
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+- LaunchDarkly integration for runtime toggles
+- Gradual rollout by user segment
+- Kill switches for instant feature disable
+- A/B testing coordination
 
-Key characteristics:
+### Security and Compliance
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+**Supply chain security:**
 
-## Mend
+- Signed commits required (GPG or SSH)
+- Signed container images (Sigstore/cosign)
+- SBOM generation for all artifacts
+- Provenance attestation (SLSA Level 3)
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+**Policy enforcement:**
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+- OPA Gatekeeper for admission control
+- Policies defined as code, versioned in Git
+- Pre-commit policy validation
+- Deployment blocked for policy violations
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+**Compliance automation:**
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+- Automatic evidence collection for every deployment
+- Change records created in ServiceNow
+- Audit logs exported to SIEM
+- Compliance dashboards for auditors
 
-Key characteristics:
+**Secrets management:**
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+- HashiCorp Vault integration
+- Dynamic secrets with automatic rotation
+- No secrets in Git (sealed secrets for bootstrap only)
+- Audit logging of all secret access
 
-## Synack
+### Multi-Tenancy
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+**Namespace isolation:**
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+- Each team gets dedicated namespaces
+- Network policies enforce isolation
+- Resource quotas prevent noisy neighbors
+- RBAC tied to corporate identity
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+**Self-service onboarding:**
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+- Teams request access through portal
+- Automatic namespace provisioning
+- Template repository generation
+- Pipeline configuration scaffolding
 
-Key characteristics:
+**Hierarchical configuration:**
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+- Platform-wide policies (security, networking)
+- Business unit customizations
+- Team-specific overrides
+- Application-level tuning
 
-## HackerOne
+### Observability
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+**Deployment metrics:**
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+- Deployment frequency per team
+- Lead time from commit to production
+- Change failure rate
+- Mean time to recovery
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+**Pipeline visibility:**
 
-Key characteristics:
+- Real-time pipeline status dashboards
+- Slack notifications for failures
+- Deployment history with full context
+- Cost attribution per deployment
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+**Debugging support:**
 
+- Logs aggregated to centralized platform
+- Distributed tracing across services
+- Easy access to pod logs and events
+- Debug container injection for troubleshooting
+
+## Migration Strategy
+
+### Phased Rollout
+
+**Phase 1: Foundation (Months 1-3)**
+
+- Core platform deployment
+- Pilot with 5 volunteer teams
+- Pattern library development
+- Documentation and training materials
+
+**Phase 2: Early Adopters (Months 4-6)**
+
+- Expanded to 40 teams
+- Self-service portal launch
+- Compliance automation implementation
+- Feedback incorporation
+
+**Phase 3: Majority Migration (Months 7-12)**
+
+- Remaining teams migrated
+- Legacy system decommissioning
+- Advanced features rollout
+- Center of excellence establishment
+
+**Phase 4: Optimization (Ongoing)**
+
+- Continuous improvement based on metrics
+- New capability development
+- Platform evolution with Kubernetes releases
+
+### Training and Enablement
+
+- 40-hour certification program for platform engineers
+- 8-hour bootcamp for developers
+- Self-paced online modules
+- Office hours with platform team
+- Champion network in each business unit
+
+## Results
+
+### Velocity Metrics
+
+| Metric                           | Before     | After                  |
+| -------------------------------- | ---------- | ---------------------- |
+| Deployment frequency             | Weekly     | 47 deploys/day average |
+| Lead time (commit to production) | 4+ hours   | 12 minutes             |
+| Deployment success rate          | 77%        | 99.1%                  |
+| Rollback time                    | 45 minutes | 90 seconds             |
+| Change failure rate              | 23%        | 2.1%                   |
+
+### Efficiency Gains
+
+- Release team reduced from 8 to 2 FTEs (platform focus, not manual work)
+- Developer self-service: 94% of deployments without tickets
+- Audit evidence preparation: weeks → minutes
+- Environment provisioning: days → 8 minutes
+
+### Business Impact
+
+- Time to market reduced by 73%
+- Incident rate from deployments down 89%
+- Developer satisfaction scores up 34 points
+- Passed SOX and PCI audits with zero findings on deployment controls
+
+## Technologies Used
+
+- **GitOps:** Argo CD, Argo Rollouts, Argo Workflows
+- **CI:** Tekton, Kaniko, GitHub Actions
+- **Kubernetes:** EKS, GKE, custom operators
+- **Policy:** OPA Gatekeeper, Kyverno
+- **Security:** Vault, Sigstore, Trivy, Snyk
+- **Observability:** Prometheus, Grafana, Jaeger
+- **IaC:** Terraform, Crossplane
+
+## Lessons Learned
+
+**Adoption is a people problem:**
+
+- Technical excellence isn't enough
+- Invest heavily in training and documentation
+- Champions in each team accelerate adoption
+- Celebrate early wins publicly
+
+**Start with guardrails, not gates:**
+
+- Policies that prevent bad deploys > approvals that slow good ones
+- Shift left: catch issues before they reach production
+- Make the right thing the easy thing
+
+**Platform as a product:**
+
+- Treat developers as customers
+- User research before building features
+- Measure satisfaction, not just adoption
+- Continuous improvement based on feedback
+
+## Links
+
+- [Platform Documentation](#)
+- [Architecture Decision Records](#)
+- [Migration Playbook](#)
+- [Training Materials](#)
+
+```
+
+---
+```

@@ -1,138 +1,370 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Automated Machine Learning Platform for Enterprise Data Science"
+excerpt: "Created a self-service AutoML platform enabling business analysts to build and deploy production ML models without coding, reducing model development time from 3 months to 2 weeks while maintaining data science governance and model quality standards."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Built an end-to-end automated machine learning platform for a global insurance company, democratizing access to predictive analytics. The platform enables business users to create, validate, and deploy machine learning models through a guided interface, while maintaining the governance and quality controls required in a regulated industry.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The organization's data science capabilities couldn't scale to meet demand:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Backlog:** 200+ ML project requests, 18-month average wait time
+- **Data science team:** 12 data scientists for 40,000 employees
+- **Time to production:** Average 5 months from request to deployed model
+- **Model maintenance:** 60% of data scientist time spent on existing model updates
+- **Shadow IT:** Business units building ungoverned models in Excel and Access
+- **Governance gaps:** Inconsistent model documentation, validation, and monitoring
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Requirements for the new platform:
 
-Key characteristics:
+- Enable business analysts to build basic ML models without coding
+- Reduce time from idea to production model by 80%
+- Maintain governance standards for model risk management
+- Integrate with existing data infrastructure
+- Support data scientist workflows for complex models
+- Ensure regulatory compliance (model risk, fair lending, privacy)
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### User Experience Layer
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Project wizard:**
+Guided workflow for new ML projects:
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+1. Define business problem and success metrics
+2. Select and configure data sources
+3. Review data quality and feature recommendations
+4. Choose model type and constraints
+5. Review automated experiments
+6. Select champion model with explanation
+7. Configure deployment and monitoring
+8. Request approval and deploy
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Persona-based interfaces:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+_Business analyst view:_
 
-Key characteristics:
+- No-code interface with guided workflows
+- Plain-language model explanations
+- Business metric focus (revenue impact, cost savings)
+- Guardrails preventing common mistakes
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+_Data scientist view:_
 
-## RunSybil
+- Jupyter integration for custom code
+- Experiment management and comparison
+- Feature engineering workbench
+- Advanced configuration options
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+_Governance view:_
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+- Model inventory and lineage
+- Validation status tracking
+- Documentation completeness
+- Risk classification and controls
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+### Data Layer
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+**Data connectivity:**
 
-Key characteristics:
+- Connectors for enterprise data sources (Snowflake, Oracle, S3)
+- Federated queries without data movement
+- Automated data profiling and quality assessment
+- Sensitive data detection and handling
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+**Feature store:**
 
-## Mindgard
+- Centralized feature repository
+- Feature discovery and reuse
+- Lineage tracking to source data
+- Time-travel for point-in-time features
+- Online and offline serving
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+**Data preparation:**
+Automated preprocessing pipeline:
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+- Missing value imputation (multiple strategies)
+- Outlier detection and handling
+- Categorical encoding (target, one-hot, embedding)
+- Numerical scaling and transformation
+- Feature selection (statistical and model-based)
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+### AutoML Engine
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+**Problem type detection:**
 
-Key characteristics:
+- Classification (binary, multiclass)
+- Regression (continuous, count)
+- Time series forecasting
+- Clustering and segmentation
+- Survival analysis
+- Anomaly detection
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+**Algorithm selection:**
+Search space includes:
 
-## Mend
+- Linear models (logistic regression, elastic net)
+- Tree ensembles (Random Forest, XGBoost, LightGBM, CatBoost)
+- Neural networks (MLP, TabNet)
+- Support vector machines
+- Naive Bayes
+- K-nearest neighbors
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+**Hyperparameter optimization:**
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+- Bayesian optimization with TPE
+- Multi-fidelity optimization (Hyperband)
+- Early stopping for poor configurations
+- Ensemble construction from Pareto frontier
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+**Neural architecture search:**
+For complex tabular problems:
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+- Automated layer configuration
+- Embedding dimension selection
+- Regularization tuning
+- Learning rate scheduling
 
-Key characteristics:
+**Time constraints:**
+User configures total budget (e.g., "run for 4 hours"):
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+- Intelligent allocation across algorithm families
+- Progressive refinement as budget allows
+- Best model available at any interruption point
 
-## Synack
+### Model Evaluation
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+**Automated validation:**
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+- Cross-validation with stratification
+- Time-based splits for temporal data
+- Out-of-time validation for forecasting
+- Holdout set evaluation
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+**Metrics suite:**
+Classification: AUC-ROC, F1, precision, recall, calibration
+Regression: RMSE, MAE, R², MAPE
+Ranking: NDCG, MAP
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+**Business metrics:**
 
-Key characteristics:
+- Profit curve analysis
+- Cost-sensitive evaluation
+- Lift and gain charts
+- Customer-specific impact estimation
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+**Fairness analysis:**
 
-## HackerOne
+- Demographic parity assessment
+- Equalized odds checking
+- Disparate impact analysis
+- Bias mitigation recommendations
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+**Explainability:**
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+- Global feature importance (permutation, SHAP)
+- Local explanations (LIME, SHAP)
+- Partial dependence plots
+- Counterfactual explanations
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+### Governance Framework
 
-Key characteristics:
+**Model documentation:**
+Automated generation of model documentation:
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+- Problem statement and business context
+- Data sources and feature descriptions
+- Methodology and algorithm selection rationale
+- Performance metrics and validation results
+- Limitations and known issues
+- Deployment and monitoring plan
 
+**Approval workflow:**
+
+- Risk classification (low, medium, high, critical)
+- Tiered approval requirements based on risk
+- Validation checkpoints (data quality, performance, fairness)
+- Integration with existing GRC systems
+
+**Audit trail:**
+
+- Complete lineage from data to deployment
+- Version control for all artifacts
+- Immutable experiment logs
+- Compliance reporting
+
+### Deployment
+
+**Deployment options:**
+
+- REST API (real-time scoring)
+- Batch scoring (scheduled or triggered)
+- Embedded scoring (database integration)
+- Edge deployment (for offline use)
+
+**Model serving:**
+
+- Kubernetes-based serving infrastructure
+- Automatic scaling based on load
+- A/B testing and champion/challenger
+- Gradual rollout with automatic rollback
+
+**Monitoring:**
+
+- Prediction drift detection
+- Feature drift monitoring
+- Performance degradation alerts
+- Data quality monitoring
+- Automatic retraining triggers
+
+## Implementation
+
+### Technology Stack
+
+**Frontend:**
+
+- React with TypeScript
+- Material-UI components
+- Recharts for visualization
+- JupyterHub integration
+
+**Backend:**
+
+- Python FastAPI for services
+- Celery for background jobs
+- Redis for caching and queues
+- PostgreSQL for metadata
+
+**ML Infrastructure:**
+
+- MLflow for experiment tracking
+- Feast for feature store
+- Seldon Core for model serving
+- Great Expectations for data validation
+
+**Compute:**
+
+- Kubernetes for orchestration
+- GPU nodes for neural architecture search
+- Spot instances for hyperparameter search
+- Dask for distributed feature engineering
+
+### Rollout
+
+**Phase 1: Foundation (4 months)**
+
+- Core platform development
+- Integration with data sources
+- Pilot with data science team
+- Governance framework design
+
+**Phase 2: Controlled Launch (3 months)**
+
+- Training program for analysts
+- 50 pilot users across 5 business units
+- Feedback incorporation
+- Governance process refinement
+
+**Phase 3: Enterprise Rollout (6 months)**
+
+- Self-service onboarding
+- Full governance integration
+- Champion program establishment
+- Advanced features release
+
+## Results
+
+### Adoption Metrics
+
+| Metric                        | Value   |
+| ----------------------------- | ------- |
+| Active users                  | 340+    |
+| Models deployed               | 127     |
+| Experiments run               | 23,000+ |
+| Business units using platform | 18      |
+| Models in production          | 89      |
+
+### Productivity Gains
+
+| Metric                             | Before   | After   |
+| ---------------------------------- | -------- | ------- |
+| Time to first model                | 5 months | 2 weeks |
+| Models deployed per year           | 8        | 47      |
+| Data scientist time on maintenance | 60%      | 15%     |
+| Project backlog                    | 200+     | 34      |
+| Business user model creators       | 0        | 87      |
+
+### Model Quality
+
+**Compared to hand-built models:**
+
+- AutoML models achieve 94% of performance on average
+- 23% of AutoML models outperform hand-built predecessors
+- Governance compliance: 100% (vs. 67% for ad-hoc models)
+- Documentation completeness: 100% (vs. 34% for manual)
+
+### Business Impact
+
+**Value delivered by platform-built models:**
+
+- Claims fraud detection: $12M annual savings
+- Customer churn prediction: $8M retention improvement
+- Pricing optimization: $23M revenue improvement
+- Underwriting automation: $4M efficiency gains
+
+**ROI:**
+
+- Platform investment: $2.8M
+- Annual value delivered: $47M+
+- Payback period: 22 days
+
+## Technologies Used
+
+- **AutoML:** Custom engine, FLAML, Auto-sklearn inspiration
+- **Feature Store:** Feast
+- **Experiment Tracking:** MLflow
+- **Model Serving:** Seldon Core, KServe
+- **Data Validation:** Great Expectations
+- **Explainability:** SHAP, LIME
+- **Frontend:** React, TypeScript
+- **Backend:** Python, FastAPI, Celery
+- **Infrastructure:** Kubernetes, PostgreSQL, Redis
+
+## Lessons Learned
+
+**Governance enables scale:**
+
+- Without governance, platform would create risk, not value
+- Embedding compliance in workflow reduces friction
+- Automated documentation saves time and improves quality
+- Clear boundaries let users move fast within guardrails
+
+**User research matters:**
+
+- Analysts need different experience than data scientists
+- Invested heavily in UX before building features
+- Iterative feedback loops shaped every interface
+- Champions in business units drove adoption
+
+**AutoML has limits:**
+
+- Complex feature engineering still needs experts
+- Novel problems require data scientist judgment
+- Platform is accelerator, not replacement
+- Best results: AutoML for 80%, experts for 20%
+
+## Links
+
+- [Platform Documentation](#)
+- [User Training Materials](#)
+- [Governance Framework](#)
+- [Model Catalog](#)
+
+```
+
+---
+```

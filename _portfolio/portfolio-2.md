@@ -1,138 +1,219 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Distributed Microservices Platform for Financial Trading"
+excerpt: "Architected and deployed a high-frequency trading infrastructure processing 2.3 million transactions per second with sub-millisecond latency, featuring automated failover, real-time risk management, and regulatory compliance logging."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Designed and implemented a complete trading infrastructure for a quantitative hedge fund, replacing their legacy monolithic system with a modern microservices architecture. The platform handles order routing, execution, risk management, and regulatory reporting across 14 global exchanges.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The client's existing system was approaching its limits:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Latency:** 15-20ms order-to-execution was uncompetitive in modern markets
+- **Scalability:** System buckled during high-volatility events (flash crashes, earnings releases)
+- **Reliability:** Average of 3.2 hours downtime monthly, costing $400K+ in missed opportunities
+- **Compliance:** Manual regulatory reporting taking 2 FTEs and frequently delayed
+- **Development velocity:** 6-month average for new strategy deployment
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+They needed a platform that could:
 
-Key characteristics:
+- Process orders in under 500 microseconds end-to-end
+- Handle 10x normal volume during volatility spikes
+- Achieve 99.999% uptime (5.26 minutes/year maximum downtime)
+- Automate all regulatory reporting (MiFID II, SEC, FINRA)
+- Deploy new trading strategies in under 2 weeks
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### Core Design Principles
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Event-driven architecture:** Every state change produces an immutable event, enabling perfect audit trails, replay capabilities, and loose coupling between services.
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+**Shared-nothing design:** Each service owns its data completely, communicating only through well-defined APIs and event streams. No shared databases, no distributed transactions.
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Mechanical sympathy:** Careful attention to hardware characteristics — cache-line alignment, NUMA-aware memory allocation, kernel bypass networking, busy-wait spinlocks instead of sleeping locks.
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+### Service Decomposition
 
-Key characteristics:
+The monolith was decomposed into 34 microservices across five domains:
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+**Market Data Domain:**
 
-## RunSybil
+- Feed handlers for each exchange (14 services)
+- Normalization service converting exchange-specific formats to canonical model
+- Aggregation service building consolidated order books
+- Distribution service with multicast delivery to consumers
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Order Management Domain:**
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+- Order gateway receiving strategy signals
+- Smart order router selecting optimal execution venues
+- Execution management tracking order lifecycle
+- Position service maintaining real-time positions
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+**Risk Domain:**
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+- Pre-trade risk checking (position limits, concentration, velocity)
+- Real-time P&L calculation
+- Margin monitoring and alerting
+- Exposure aggregation across strategies
 
-Key characteristics:
+**Strategy Domain:**
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+- Strategy container runtime
+- Signal generation services
+- Backtesting infrastructure
+- Performance attribution
 
-## Mindgard
+**Compliance Domain:**
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+- Trade reporting (real-time regulatory feeds)
+- Best execution analysis
+- Transaction cost analysis
+- Audit log aggregation
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+### Technology Stack
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+**Messaging:** Custom-built message bus using kernel bypass (DPDK) with Aeron for inter-process communication. Latency: 1.2 microseconds median, 4.7 microseconds 99th percentile.
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+**Compute:** C++ for latency-critical paths (order routing, risk checking), Rust for reliability-critical services (compliance, logging), Go for control plane services (deployment, monitoring).
 
-Key characteristics:
+**Storage:**
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+- In-memory data grids (custom implementation) for hot data
+- FoundationDB for transactional state
+- ClickHouse for analytics and historical queries
+- S3-compatible object storage for archives
 
-## Mend
+**Infrastructure:**
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+- Bare metal servers in co-located data centers
+- Custom container runtime (not Docker — too much overhead)
+- Consul for service discovery
+- Custom deployment orchestration (Kubernetes latency was unacceptable)
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+### Low-Latency Optimizations
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+**Network layer:**
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+- Kernel bypass using Solarflare OpenOnload
+- FPGA-accelerated network cards for market data parsing
+- Dedicated network paths for trading vs. monitoring traffic
+- Multicast for market data distribution
 
-Key characteristics:
+**Application layer:**
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+- Object pooling to eliminate allocation in hot paths
+- Cache-aligned data structures
+- Lock-free queues between components
+- CPU pinning and isolation (isolcpus)
+- Huge pages for reduced TLB misses
 
-## Synack
+**OS layer:**
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+- Custom Linux kernel with PREEMPT_RT patches
+- Disabled transparent huge pages
+- CPU frequency governors locked to maximum
+- Network interrupt coalescing tuned per-workload
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+## Deployment and Operations
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+### Infrastructure as Code
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+Complete infrastructure defined in code:
 
-Key characteristics:
+- Terraform for cloud resources (monitoring, backup)
+- Ansible for bare metal provisioning
+- Custom tooling for deployment orchestration
+- GitOps workflow with automated rollback
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+### Observability
 
-## HackerOne
+**Metrics:**
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+- Custom metrics collection (Prometheus overhead was too high)
+- 10-microsecond resolution for latency measurements
+- Automated anomaly detection
+- Real-time dashboards with 100ms refresh
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+**Tracing:**
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+- Distributed tracing with nanosecond timestamps
+- Correlation IDs across all services
+- Trace sampling for high-volume paths
+- Full trace capture for orders over threshold value
 
-Key characteristics:
+**Logging:**
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+- Structured logging to ClickHouse
+- 90-day hot retention, 7-year cold archive
+- Full query capability for compliance investigations
+- Automated alerting on error patterns
 
+### Disaster Recovery
+
+- Active-active deployment across two data centers
+- Automatic failover in under 50ms
+- State replication using Raft consensus
+- Daily disaster recovery drills
+- Chaos engineering program with random failure injection
+
+## Results
+
+### Performance Metrics
+
+| Metric                           | Legacy          | New Platform         |
+| -------------------------------- | --------------- | -------------------- |
+| Order-to-execution latency (p50) | 17.3ms          | 247μs                |
+| Order-to-execution latency (p99) | 34.1ms          | 892μs                |
+| Peak throughput                  | 180K orders/sec | 2.3M orders/sec      |
+| Monthly downtime                 | 3.2 hours       | 0.4 minutes          |
+| Strategy deployment time         | 6 months        | 8 days               |
+| Regulatory report generation     | 4 hours manual  | 12 seconds automated |
+
+### Business Impact
+
+- Trading capacity increased 12x
+- Able to pursue latency-sensitive strategies previously impossible
+- Compliance team reduced from 8 to 3 FTEs
+- New strategy deployment accelerated by 22x
+- Zero regulatory findings in subsequent audits
+
+## Lessons Learned
+
+**Architecture decisions:**
+
+- Event sourcing was essential for compliance but added complexity
+- Investing in custom tooling for the critical path paid off massively
+- Service boundaries aligned with team boundaries worked well
+- Starting with more services than needed was easier than splitting later
+
+**Operational insights:**
+
+- Observability investment should front-load, not lag
+- Automated testing in production-like environments is non-negotiable
+- Chaos engineering found issues that testing never would
+- Documentation of architectural decisions prevents repeated debates
+
+## Technologies Used
+
+- **Languages:** C++20, Rust, Go, Python
+- **Messaging:** Aeron, custom DPDK-based bus
+- **Storage:** FoundationDB, ClickHouse, Redis
+- **Infrastructure:** Bare metal, Terraform, Ansible
+- **Monitoring:** Custom metrics, Grafana, PagerDuty
+- **Networking:** Solarflare, FPGA acceleration
+
+## Links
+
+- [Architecture Overview](#)
+- [Latency Analysis Report](#)
+- [Deployment Runbook](#)
+
+```
+
+---
+```

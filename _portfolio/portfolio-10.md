@@ -1,138 +1,344 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Multi-Tenant SaaS Platform with AI-Powered Features"
+excerpt: "Architected and launched a B2B SaaS platform serving 2,400 enterprise customers, featuring AI-powered document processing, automated workflows, and real-time collaboration, processing 14 million documents monthly with 99.95% uptime."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Led the technical design and implementation of a comprehensive document intelligence platform for enterprise customers. The system combines document processing, workflow automation, AI-powered extraction, and collaboration features in a secure multi-tenant architecture serving Fortune 500 companies across regulated industries.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+The startup had a promising MVP but faced scalability and enterprise readiness challenges:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Architecture:** Single-tenant design couldn't scale beyond 50 customers
+- **Performance:** Document processing took 30+ seconds, frustrating users
+- **Security:** Insufficient isolation for enterprise requirements
+- **Compliance:** No SOC 2, HIPAA, or GDPR compliance
+- **AI accuracy:** Document extraction accuracy at 71%, requiring manual correction
+- **Reliability:** Frequent outages during peak usage
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Requirements for the platform rebuild:
 
-Key characteristics:
+- Multi-tenant architecture supporting 5,000+ customers
+- Document processing under 5 seconds for standard documents
+- Enterprise security with tenant isolation
+- SOC 2 Type II, HIPAA, and GDPR compliance
+- AI extraction accuracy above 95%
+- 99.9% uptime SLA
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### Multi-Tenancy Design
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Isolation model:**
+Hybrid approach balancing cost efficiency and isolation:
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+_Compute isolation:_
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+- Shared Kubernetes clusters with namespace isolation
+- Network policies enforcing tenant boundaries
+- Resource quotas per tenant
+- Optional dedicated nodes for enterprise tier
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+_Data isolation:_
 
-Key characteristics:
+- Logical isolation within shared databases (tenant_id column)
+- Tenant-specific encryption keys
+- Schema-per-tenant option for enterprise
+- Complete physical isolation for regulated industries
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+_Storage isolation:_
 
-## RunSybil
+- S3 buckets with prefix-based separation
+- Tenant-specific KMS keys
+- Access logging per tenant
+- Cross-tenant access prevention
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Tenant context:**
+Tenant context propagated throughout the stack:
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+```python
+# Middleware extracts tenant from JWT
+tenant_id = extract_tenant(request.headers['Authorization'])
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+# Context available throughout request lifecycle
+with tenant_context(tenant_id):
+    # All database queries automatically scoped
+    documents = Document.query.all()  # Implicitly filtered by tenant
+```
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+### Document Processing Pipeline
 
-Key characteristics:
+**Ingestion:**
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+- Multi-channel upload (web, API, email, integrations)
+- Virus scanning with ClamAV
+- File type validation and normalization
+- Metadata extraction
+- Queue assignment based on document type and priority
 
-## Mindgard
+**Processing stages:**
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+1. **Pre-processing:** PDF normalization, image enhancement, deskewing
+2. **OCR:** Tesseract and cloud OCR ensemble for text extraction
+3. **Classification:** ML model categorizing document type
+4. **Extraction:** AI models extracting structured data
+5. **Validation:** Business rules and confidence thresholds
+6. **Post-processing:** Indexing, thumbnail generation, notifications
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+**Scaling strategy:**
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+- Kubernetes HPA scaling workers based on queue depth
+- GPU nodes for ML inference workloads
+- Spot instances for batch processing (70% cost savings)
+- Priority queues for time-sensitive documents
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+### AI/ML Capabilities
 
-Key characteristics:
+**Document classification:**
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+- Fine-tuned LayoutLM model on customer documents
+- 200+ document types supported
+- 97.3% accuracy across all types
+- Continuous learning from corrections
 
-## Mend
+**Information extraction:**
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+- Custom transformer models per document type
+- Invoice extraction: vendor, amounts, line items, dates
+- Contract extraction: parties, terms, clauses, dates
+- Form extraction: field detection and value extraction
+- Table extraction with structure preservation
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+**Training pipeline:**
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+- Customer-specific model fine-tuning
+- Few-shot learning for new document types
+- Active learning prioritizing uncertain examples
+- Automated retraining on correction data
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+**Extraction accuracy:**
+| Document Type | Accuracy (Before) | Accuracy (After) |
+|---------------|-------------------|------------------|
+| Invoices | 74% | 96.2% |
+| Contracts | 68% | 93.7% |
+| Forms | 72% | 95.1% |
+| Tables | 65% | 91.8% |
 
-Key characteristics:
+### Workflow Engine
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+**Workflow definition:**
+Visual workflow builder with code fallback:
 
-## Synack
+- Drag-and-drop interface for common patterns
+- Conditional branching based on document content
+- Integration nodes for external systems
+- Human-in-the-loop approval steps
+- SLA tracking and escalation
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+**Execution engine:**
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+- Temporal.io for durable workflow execution
+- Exactly-once semantics for critical operations
+- Long-running workflow support (days to months)
+- Visibility and debugging tools
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+**Common workflows:**
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+- Invoice approval routing
+- Contract review and signing
+- Compliance document collection
+- Customer onboarding packets
 
-Key characteristics:
+### Collaboration Features
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+**Real-time collaboration:**
 
-## HackerOne
+- WebSocket-based presence and updates
+- Operational transformation for concurrent edits
+- Commenting and @mentions
+- Activity feeds and notifications
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+**Review and approval:**
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+- Multi-stage review workflows
+- Role-based permissions
+- Digital signatures (DocuSign, Adobe Sign integration)
+- Audit trail of all changes
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+**External collaboration:**
 
-Key characteristics:
+- Secure sharing links with expiration
+- Guest access with limited permissions
+- External comment collection
+- Client portals
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+### Integration Layer
 
+**Pre-built integrations:**
+
+- Cloud storage: Google Drive, Dropbox, Box, OneDrive
+- CRM: Salesforce, HubSpot
+- ERP: SAP, NetSuite, QuickBooks
+- E-signature: DocuSign, Adobe Sign
+- Communication: Slack, Microsoft Teams, email
+
+**Integration framework:**
+
+- OAuth 2.0 for authentication
+- Webhook delivery with retry
+- Polling fallback for systems without webhooks
+- iPaaS connectors (Workato, Tray.io)
+
+**API:**
+
+- RESTful API with OpenAPI specification
+- GraphQL for complex queries
+- Rate limiting per tenant
+- API versioning with deprecation policies
+
+### Security and Compliance
+
+**Authentication:**
+
+- SSO support (SAML, OIDC)
+- MFA enforcement options
+- Session management with configurable timeouts
+- IP allowlisting for enterprise
+
+**Authorization:**
+
+- RBAC with custom role definition
+- Attribute-based access control (ABAC)
+- Document-level permissions
+- Field-level redaction
+
+**Encryption:**
+
+- TLS 1.3 for transit
+- AES-256 for data at rest
+- Tenant-specific KMS keys
+- Customer-managed keys option
+
+**Compliance certifications:**
+
+- SOC 2 Type II
+- HIPAA (with BAA)
+- GDPR compliance
+- ISO 27001 (in progress)
+
+**Audit logging:**
+
+- All user actions logged
+- API access logging
+- Admin action logging
+- Log retention and export
+
+### Infrastructure
+
+**Cloud architecture:**
+
+- Primary: AWS us-east-1
+- DR: AWS us-west-2
+- Edge: CloudFront for static assets
+- Multi-region database replication
+
+**Kubernetes platform:**
+
+- EKS with managed node groups
+- Istio service mesh
+- Horizontal pod autoscaling
+- Pod disruption budgets for availability
+
+**Observability:**
+
+- Datadog for metrics and APM
+- Centralized logging with Loki
+- Distributed tracing
+- Custom dashboards per tenant
+
+## Results
+
+### Business Metrics
+
+| Metric                      | Launch | Current |
+| --------------------------- | ------ | ------- |
+| Enterprise customers        | 12     | 2,400   |
+| Monthly documents processed | 180K   | 14M     |
+| Monthly recurring revenue   | $89K   | $4.2M   |
+| Net revenue retention       | 94%    | 127%    |
+| Customer satisfaction (NPS) | 23     | 67      |
+
+### Technical Metrics
+
+| Metric                       | Before Rebuild | After       |
+| ---------------------------- | -------------- | ----------- |
+| Document processing time     | 32 seconds     | 3.4 seconds |
+| AI extraction accuracy       | 71%            | 95.2%       |
+| Uptime                       | 97.2%          | 99.97%      |
+| API response time (p50)      | 890ms          | 127ms       |
+| Support tickets per customer | 4.2/month      | 0.8/month   |
+
+### Enterprise Wins
+
+**Notable customers:**
+
+- 3 Fortune 100 companies
+- 12 Fortune 500 companies
+- 47 financial services firms
+- 23 healthcare organizations
+
+**Largest deployment:**
+
+- 12,000 users
+- 2.3M documents/month
+- Custom AI models for 34 document types
+- Integration with 8 internal systems
+
+## Technologies Used
+
+- **Backend:** Python (FastAPI), Go (high-performance services)
+- **Frontend:** React, TypeScript, TailwindCSS
+- **Database:** PostgreSQL (primary), Redis (caching), Elasticsearch (search)
+- **ML/AI:** PyTorch, Hugging Face Transformers, custom models
+- **Infrastructure:** AWS, Kubernetes (EKS), Terraform
+- **Workflow:** Temporal.io
+- **Observability:** Datadog, Loki, Jaeger
+- **Security:** Vault (secrets), OPA (policy)
+
+## Lessons Learned
+
+**Multi-tenancy is a spectrum:**
+
+- One-size-fits-all doesn't work for enterprise
+- Offer isolation tiers matching customer requirements
+- Physical isolation for regulated industries is essential
+- Design for tenant-specific customization
+
+**AI accuracy requires iteration:**
+
+- Initial models are just the beginning
+- Feedback loops from corrections are gold
+- Per-customer fine-tuning unlocks enterprise deals
+- Human-in-the-loop is a feature, not a failure
+
+**Enterprise sales drive architecture:**
+
+- Security requirements discovered during sales process
+- Compliance certifications are table stakes
+- Integrations determine deal success
+- Build for enterprise from the start
+
+## Links
+
+- [Product Website](#)
+- [API Documentation](#)
+- [Security Whitepaper](#)
+- [Architecture Overview](#)
+
+```
+
+---
+```

@@ -1,138 +1,313 @@
 ---
-title: "Top 7 best AI penetration testing companies in 2026"
-excerpt: " Traditional penetration testing was designed to surface weaknesses during a defined engagement window. That
-model assumed environments remained relatively stable between tests. In cloud-native and identity-centric architectures,
-this assumption does not hold.
-AI penetration testing operates as a persistent control not a scheduled activity. Platforms reassess attack surfaces as
-infrastructure, permissions, and integrations change. This lets security teams detect newly introduced exposure without
-waiting for the next assessment cycle.
-As a result, offensive security shifts from a reporting function into a validation mechanism that supports day-to-day
-risk management. "
+title: "Natural Language Search Engine for Enterprise Knowledge Base"
+excerpt: "Developed a semantic search system enabling employees to find information across 4.7 million documents using natural language queries, improving search success rate from 34% to 89% and reducing average time-to-answer from 23 minutes to 47 seconds."
 collection: portfolio
 ---
 
+## Project Overview
 
-## Novee
+Built an intelligent search platform for a 75,000-employee professional services firm, unifying search across SharePoint, Confluence, email archives, and proprietary databases. The system understands natural language queries, retrieves semantically relevant results, and generates AI-powered answer summaries.
 
-Novee is an AI-native penetration testing company focused on autonomous attacker simulation in modern enterprise environments. The platform is designed to continuously validate real attack paths and not produce static reports.
+## The Challenge
 
-Novee models the full attack lifecycle, including reconnaissance, exploit validation, lateral movement, and privilege escalation. Its AI agents adapt their behaviour based on environmental feedback, abandoning ineffective paths and prioritising those that lead to impact. This results in fewer findings with higher confidence.
+Knowledge discovery was the organization's biggest productivity drain:
 
-The platform is particularly effective in cloud-native and identity-heavy environments where exposure changes frequently. Continuous reassessment ensures that risk is tracked as systems evolve, not frozen at the moment of a test.
+- **Fragmented information:** Content spread across 14 different platforms
+- **Search failure:** Existing keyword search returned useful results only 34% of the time
+- **Time wasted:** Average employee spent 2.4 hours daily searching for information
+- **Duplicate work:** 40% of deliverables duplicated existing work that couldn't be found
+- **Expertise location:** No way to identify who knew what
+- **Onboarding friction:** New employees took 6 months to become productive
 
-Novee is often used as a validation layer to support prioritisation and confirm that remediation efforts actually reduce exposure.
+Requirements:
 
-Key characteristics:
+- Unified search across all knowledge repositories
+- Natural language query understanding
+- Semantic matching beyond keyword matching
+- AI-generated answer summaries
+- Expertise identification
+- Personalized results based on role and history
+- Enterprise security and access control compliance
 
-Autonomous attacker simulation with adaptive logic
-Continuous attack surface reassessment
-Validated attack-path discovery
-Prioritisation based on real progression
-Retesting to confirm remediation effectiveness
+## Technical Architecture
 
-## Harmony Intelligence
+### Data Ingestion Layer
 
-Harmony Intelligence focuses on AI-driven security testing with an emphasis on understanding how complex systems behave under adversarial conditions. The platform is designed to surface weaknesses that emerge from interactions between components not from isolated vulnerabilities.
+**Connectors built:**
 
-Its approach is particularly relevant for organisations running interconnected services and automated workflows. Harmony Intelligence evaluates how attackers could exploit logic gaps, misconfigurations, and trust relationships in systems.
+- SharePoint Online (documents, lists, pages)
+- Confluence Cloud (pages, attachments, comments)
+- Microsoft Exchange (email archives, shared mailboxes)
+- Salesforce (accounts, opportunities, cases)
+- Custom SQL databases (client matter system, time tracking)
+- File shares (legacy document repositories)
+- Slack (channel history, files)
 
-The platform emphasises interpretability. Findings are presented in a way that explains why progression was possible, which helps teams understand and address root causes not symptoms.
+**Ingestion pipeline:**
 
-Harmony Intelligence is often adopted by organisations seeking deeper insight into systemic risk, not surface-level exposure.
+- Change detection for incremental updates
+- Content extraction (text, metadata, structure)
+- Document parsing (PDF, Office, HTML, images with OCR)
+- Chunking strategy for long documents
+- Rate limiting and backpressure handling
+- Dead letter queue for failed documents
 
-Key characteristics:
+**Scale:**
 
-AI-driven testing of complex system interactions
-Focus on logic and workflow exploitation
-Clear contextual explanation of findings
-Support for remediation prioritisation
-Designed for interconnected enterprise environments
+- 4.7 million documents indexed
+- 23 billion tokens of text
+- Daily delta processing: ~47,000 documents
+- Full re-index capability within 48 hours
 
-## RunSybil
+### Embedding and Indexing
 
-RunSybil is positioned around autonomous penetration testing with a strong emphasis on behavioural realism. The platform simulates how attackers operate over time, including persistence and adaptation.
+**Embedding model:**
 
-Rather than executing predefined attack chains, RunSybil evaluates which actions produce meaningful access and adjusts accordingly. This makes it effective at identifying subtle paths that emerge from configuration drift or weak segmentation.
+- Fine-tuned e5-large-v2 on domain-specific corpus
+- Training data: 500,000 query-document pairs from search logs
+- Hard negative mining from failed searches
+- Contrastive learning with in-batch negatives
+- Evaluation on held-out relevance judgments
 
-RunSybil is frequently used in environments where traditional testing produces large volumes of low-value findings. Its validation-first approach helps teams focus on paths that represent genuine exposure.
+**Chunking strategy:**
 
-The platform supports continuous execution and retesting, letting security teams measure improvement not rely on static assessments.
+- Recursive splitting respecting document structure
+- Overlap between chunks for context preservation
+- Section-aware splitting (headers, paragraphs, lists)
+- Metadata preservation (source, date, author, permissions)
+- Average chunk size: 512 tokens
 
-Key characteristics:
+**Vector database:**
 
-Behaviour-driven autonomous testing
-Focus on progression and persistence
-Reduced noise through validation
-Continuous execution model
-Measurement of remediation impact
+- Pinecone for vector storage and retrieval
+- Namespaces for multi-tenant isolation
+- Metadata filtering for access control
+- Hybrid search combining dense and sparse
 
-## Mindgard
+**Sparse index:**
 
-Mindgard specialises in adversarial testing of AI systems and AI-enabled workflows. Its platform evaluates how AI components behave under malicious or unexpected input, including manipulation, leakage, and unsafe decision paths.
+- BM25 index for keyword matching
+- Custom tokenization for domain terms
+- Acronym and abbreviation expansion
+- Entity recognition and indexing
 
-The focus is increasingly important as AI becomes embedded in business-important processes. Failures often stem from logic and interaction effects, not traditional vulnerabilities.
+### Query Processing
 
-Mindgard’s testing approach is proactive. It is designed to surface weaknesses before deployment and to support iterative improvement as systems evolve.
+**Query understanding:**
 
-Organisations adopting Mindgard typically view AI as a distinct security surface that requires dedicated validation beyond infrastructure testing.
+- Intent classification (informational, navigational, transactional)
+- Entity extraction (project names, client names, people, dates)
+- Query expansion with synonyms and related terms
+- Acronym resolution from organization glossary
+- Spelling correction with domain vocabulary
 
-Key characteristics:
+**Query transformation:**
 
-Adversarial testing of AI and ML systems
-Focus on logic, behaviour, and misuse
-Pre-deployment and continuous testing support
-Engineering-actionable findings
-Designed for AI-enabled workflows
+```
+User query: "What's our cloud migration approach for financial clients?"
 
-## Mend
+Expanded query:
+- Original: cloud migration approach financial clients
+- Entities: [industry:financial_services]
+- Expanded: cloud migration strategy methodology banking insurance finserv
+- Intent: informational_methodology
+```
 
-Mend approaches AI penetration testing from a broader application security perspective. The platform integrates testing, analysis, and remediation support in the software lifecycle.
+**Retrieval strategy:**
 
-Its strength lies in correlating findings in code, dependencies, and runtime behaviour. This helps teams understand how vulnerabilities and misconfigurations interact, not treating them in isolation.
+- Hybrid search: dense (0.7) + sparse (0.3) weighted combination
+- Initial retrieval: 100 candidates
+- Cross-encoder reranking: top 100 → top 20
+- Diversity injection to avoid redundant results
+- Personalization boost based on user history
 
-Mend is often used by organisations that want AI-assisted validation embedded into existing AppSec workflows. Its approach emphasises practicality and scalability over deep autonomous simulation.
+### Answer Generation
 
-The platform fits well in environments where development velocity is high and security controls must integrate seamlessly.
+**RAG pipeline:**
 
-Key characteristics:
+1. Retrieve relevant chunks (top 10)
+2. Assess chunk relevance and extract key passages
+3. Generate answer with citations
+4. Fact-check answer against sources
+5. Format with source links
 
-AI-assisted application security testing
-Correlation in multiple risk sources
-Integration with development workflows
-Emphasis on remediation efficiency
-Scalable in large codebases
+**LLM integration:**
 
-## Synack
+- Claude for answer generation (accuracy priority)
+- Streaming response for perceived latency
+- Context window management for long retrievals
+- Prompt engineering for citation accuracy
 
-Synack combines human expertise with automation to deliver penetration testing at scale. Its model emphasises trusted researchers operating in controlled environments.
+**Answer format:**
 
-While not purely autonomous, Synack incorporates AI and automation to manage scope, triage findings, and support continuous testing. The hybrid approach balances creativity with operational consistency.
+```
+Based on our methodology documentation, our cloud migration approach
+for financial services clients follows a five-phase model:
 
-Synack is often chosen for high-risk systems where human judgement remains critical. Its platform supports ongoing testing not one-off engagements.
+1. **Assessment**: Evaluate current infrastructure and regulatory requirements [1]
+2. **Planning**: Develop migration roadmap with compliance checkpoints [1][2]
+3. **Pilot**: Migrate non-critical workloads to validate approach [2]
+4. **Migration**: Execute phased migration with rollback capability [3]
+5. **Optimization**: Continuous improvement and cost optimization [3]
 
-The combination of vetted talent and structured workflows makes Synack suitable for regulated and mission-important environments.
+Key considerations for financial clients include SOC 2 compliance,
+data residency requirements, and regulatory reporting capabilities [2].
 
-Key characteristics:
+Sources:
+[1] Cloud Migration Methodology v3.2 - SharePoint
+[2] Financial Services Industry Playbook - Confluence
+[3] AWS Migration Guide - Internal Wiki
+```
 
-Hybrid model combining humans and automation
-Trusted researcher network
-Continuous testing ability
-Strong governance and control
-Suitable for high-assurance environments
+### Personalization
 
-## HackerOne
+**User context:**
 
-HackerOne is best known for its bug bounty platform, but it also plays a role in modern penetration testing strategies. Its strength lies in scale and diversity of attacker perspectives.
+- Role and department
+- Project history
+- Search and click history
+- Expertise areas (inferred)
+- Collaboration network
 
-The platform lets organisations to continuously test systems through managed programmes with structured disclosure and remediation workflows. While not autonomous in the AI sense, HackerOne increasingly incorporates automation and analytics support prioritisation.
+**Personalization signals:**
 
-HackerOne is often used with AI pentesting tools not as a replacement. It provides exposure to creative attack techniques that automated systems may not uncover.
+- Recent projects boost related content
+- Department-specific terminology matching
+- Previously accessed documents boosted
+- Colleague-accessed content boosted
+- Expertise-based result diversification
 
-Key characteristics:
+**Cold start handling:**
 
-Large global researcher community
-Continuous testing through managed programmes
-Structured disclosure and remediation
-Automation to support triage and prioritisation
-Complementary to AI-driven testing
+- Role-based defaults for new employees
+- Onboarding content prioritization
+- Gradual personalization as signals accumulate
 
+### Expertise Finding
+
+**People search:**
+"Who knows about AWS Lambda?" returns:
+
+- Authors of Lambda-related documents
+- People who've worked on Lambda projects
+- People frequently asking/answering Lambda questions
+- Weighted by recency and depth of expertise
+
+**Expertise inference:**
+
+- Document authorship analysis
+- Project participation
+- Communication patterns (anonymized)
+- Self-declared skills (LinkedIn, internal profiles)
+- Endorsements and collaboration patterns
+
+### Security and Compliance
+
+**Access control:**
+
+- Permission sync from source systems
+- Row-level security in vector database
+- Query-time filtering based on user permissions
+- No content shown user shouldn't access
+
+**Audit logging:**
+
+- All queries logged with user context
+- Retrieved documents tracked
+- Generated answers stored
+- Compliance reporting capability
+
+**Data handling:**
+
+- No PII in embeddings
+- Sensitive document classification
+- Retention policies enforced
+- GDPR right-to-deletion supported
+
+## Results
+
+### Search Performance
+
+| Metric                   | Before     | After      |
+| ------------------------ | ---------- | ---------- |
+| Search success rate      | 34%        | 89%        |
+| Time to find answer      | 23 minutes | 47 seconds |
+| Queries per employee/day | 3.2        | 8.7        |
+| Click-through rate       | 18%        | 67%        |
+| Zero-result queries      | 23%        | 2%         |
+
+### Business Impact
+
+**Productivity:**
+
+- Time saved per employee: 1.8 hours/day
+- Organization-wide: 3.4 million hours annually
+- Monetary value: $127M annually (at average billing rate)
+
+**Quality:**
+
+- Duplicate work reduced 62%
+- Proposal reuse increased 340%
+- Knowledge transfer to new hires accelerated (6 months → 8 weeks)
+
+**Engagement:**
+
+- Daily active users: 67,000 (89% of workforce)
+- Queries per day: 583,000
+- User satisfaction: 91%
+
+### Technical Metrics
+
+| Metric                 | Value                   |
+| ---------------------- | ----------------------- |
+| Query latency (P50)    | 1.2 seconds             |
+| Query latency (P99)    | 3.8 seconds             |
+| Answer generation time | 2.1 seconds average     |
+| Index freshness        | <15 minutes for changes |
+| System availability    | 99.95%                  |
+
+## Technologies Used
+
+- **Embeddings:** Custom fine-tuned e5-large-v2, sentence-transformers
+- **Vector DB:** Pinecone
+- **Sparse Search:** Elasticsearch
+- **LLM:** Claude (Anthropic), with fallback to GPT-4
+- **Orchestration:** LangChain, custom retrieval pipeline
+- **Backend:** Python, FastAPI, Celery
+- **Frontend:** React, TypeScript
+- **Infrastructure:** AWS (EKS, Lambda, S3), Terraform
+
+## Lessons Learned
+
+**Retrieval quality > generation quality:**
+
+- If you retrieve wrong documents, the best LLM can't save you
+- Invested 70% of effort in retrieval, 30% in generation
+- Evaluation datasets essential for retrieval tuning
+- Hybrid search consistently outperformed pure semantic
+
+**Domain adaptation matters:**
+
+- Off-the-shelf embeddings underperformed significantly
+- Fine-tuning on domain data improved MRR by 34%
+- Organization-specific terminology critical
+- Acronym handling surprisingly important
+
+**Enterprise integration is the hard part:**
+
+- Connector development took 40% of project time
+- Permission syncing was complex and critical
+- Change management as important as technology
+- Executive sponsorship essential for adoption
+
+## Links
+
+- [System Architecture](#)
+- [User Guide](#)
+- [API Documentation](#)
+- [Evaluation Results](#)
+
+```
+
+---
+```
