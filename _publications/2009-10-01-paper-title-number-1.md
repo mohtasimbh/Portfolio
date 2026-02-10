@@ -1,14 +1,28 @@
 ---
-title: "Paper Title Number 1"
+title: "ImaGen: AI Image Generator in Android and IOS platform"
 collection: publications
 category: manuscripts
 permalink: /publication/2009-10-01-paper-title-number-1
-excerpt: 'This paper is about the number 1. The number 2 is left for future work.'
-date: 2009-10-01
-venue: 'Journal 1'
-slidesurl: 'https://academicpages.github.io/files/slides1.pdf'
-paperurl: 'https://academicpages.github.io/files/paper1.pdf'
-bibtexurl: 'https://academicpages.github.io/files/bibtex1.bib'
-citation: 'Your Name, You. (2009). &quot;Paper Title Number 1.&quot; <i>Journal 1</i>. 1(1).'
+excerpt: "ImaGen: AI Image Generator in Android and IOS platform"
+date: 2023-01-15
+venue: "Dafance"
+slidesurl: "https://academicpages.github.io/files/slides1.pdf"
+paperurl: "https://academicpages.github.io/files/paper1.pdf"
+bibtexurl: ""
+citation: "Mohtasim Billah, (2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
 ---
-The contents above will be part of a list of publications, if the user clicks the link for the publication than the contents of section will be rendered as a full page, allowing you to provide more information about the paper for the reader. When publications are displayed as a single page, the contents of the above "citation" field will automatically be included below this section in a smaller font.
+
+This project “ImaGen: AI Image Generator in Android and IOS platform” is a system for
+getting high-quality and realistic images from text. Many apps are providing this service. But
+most of the apps are not able to generate realistic and high-resolution images according to the
+text. Which we are able to implement in our app. our app is used in various fields, including
+advertising, social media post, architecture, fashion, film, etc. We have built our app by
+following artificial intelligence techniques and combining some models. because AI is in the
+process of analyzing existing art and creating new art. In this project, we combine two models
+for the problem of text-conditional image generation. one is the CLIP model another is the
+diffusion model. The CLIP model is a successful representation learner for images, and
+diffusion models are generative modeling frameworks that have achieved state-of-the-image
+performance in image generation tasks. To develop this project, we have used Flutter
+Framework, Dart, as a programming language, and Visual Studio, Firebase, and an emulator
+for testing purposes. This app was tested in many ways after implementation and it works
+successfully
