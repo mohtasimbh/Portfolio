@@ -6,8 +6,8 @@ permalink: /publication/2009-10-01-paper-title-number-1
 excerpt: "Firstly, I am express my heartiest thanks and gratefulness to almighty God for His divine blessing makes me possible to complete the final year project/internship successfully."
 date: 2023-01-15
 venue: "Dafance"
-slidesurl: "https://mohtasimbh.github.io/files/slides1.pdf"
-paperurl: "https://mohtasimbh.github.io/files/paper1.pdf"
+slidesurl: "https://github.com/mohtasimbh/Portfolio/blob/master/files/slides1.pdf"
+paperurl: "https://github.com/mohtasimbh/Portfolio/blob/master/files/paper1.pdf"
 bibtexurl: ""
 citation: "Mohtasim Billah, (January 2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
 ---
