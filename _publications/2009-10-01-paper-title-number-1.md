@@ -3,13 +3,13 @@ title: "ImaGen: AI Image Generator in Android and IOS platform"
 collection: publications
 category: manuscripts
 permalink: /publication/2009-10-01-paper-title-number-1
-excerpt: "ImaGen: AI Image Generator in Android and IOS platform"
+excerpt: "Firstly, I am express my heartiest thanks and gratefulness to almighty God for His divine blessing makes me possible to complete the final year project/internship successfully."
 date: 2023-01-15
 venue: "Dafance"
 slidesurl: "https://academicpages.github.io/files/slides1.pdf"
 paperurl: "https://academicpages.github.io/files/paper1.pdf"
 bibtexurl: ""
-citation: "Mohtasim Billah, (2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
+citation: "Mohtasim Billah, (January 2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
 ---
 
 This project “ImaGen: AI Image Generator in Android and IOS platform” is a system for
