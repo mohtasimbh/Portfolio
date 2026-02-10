@@ -8,7 +8,6 @@ date: 2023-01-15
 venue: "Dafance"
 slidesurl: "https://mohtasimbh.github.io/Portfolio/files/slides1.pdf"
 paperurl: "https://mohtasimbh.github.io/Portfolio/files/paper1.pdf"
-bibtexurl: ""
 citation: "Mohtasim Billah, (January 2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
 ---
 
