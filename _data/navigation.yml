@@ -6,7 +6,7 @@ main:
     url: https://scholar.google.com/citations?user=tvz_1QYAAAAJ&hl=en
 
   - title: "CV"
-    url: /files/Resume.pdf
+    url: /cv/
 
   - title: "Blog"
     url: /year-archive/
