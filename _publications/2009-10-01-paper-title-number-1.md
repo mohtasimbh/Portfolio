@@ -6,8 +6,8 @@ permalink: /publication/2009-10-01-paper-title-number-1
 excerpt: "Firstly, I am express my heartiest thanks and gratefulness to almighty God for His divine blessing makes me possible to complete the final year project/internship successfully."
 date: 2023-01-15
 venue: "Dafance"
-slidesurl: "https://academicpages.github.io/files/slides1.pdf"
-paperurl: "https://academicpages.github.io/files/paper1.pdf"
+slidesurl: "https://mohtasimbh.github.io/files/slides1.pdf"
+paperurl: "https://mohtasimbh.github.io/files/paper1.pdf"
 bibtexurl: ""
 citation: "Mohtasim Billah, (January 2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
 ---
@@ -25,4 +25,4 @@ diffusion models are generative modeling frameworks that have achieved state-of-
 performance in image generation tasks. To develop this project, we have used Flutter
 Framework, Dart, as a programming language, and Visual Studio, Firebase, and an emulator
 for testing purposes. This app was tested in many ways after implementation and it works
-successfully
+successfully.
