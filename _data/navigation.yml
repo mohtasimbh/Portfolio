@@ -3,7 +3,7 @@ main:
     url: /portfolio/
 
   - title: "Research"
-    url: https://scholar.google.com/citations?user=tvz_1QYAAAAJ&hl=en
+    url: /publications/
 
   - title: "CV"
     url: /cv/
