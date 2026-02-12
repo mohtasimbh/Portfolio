@@ -12,7 +12,6 @@ Software Engineer, BASIS Institute of Technology (BITM) \
 Job Responsibilities: (Intern) UI Design, Team Project \
 Conceptualizing 4+ visuals based on requirements per Month
 
-Achievement:
 Delivered 15 plus production ready UI screens within a 3 month internship, used in an internal training project demo.
 Reduced design revision cycles by 30 percent through early requirement reviews and rapid wireframe feedback.
 Collaborated with a 5 member team to ship a full project prototype before deadline, met all client style guidelines.
