@@ -8,8 +8,8 @@ date: 2023-03-30
 location: "Dhaka, Bangladesh"
 ---
 
-Software Engineer, BASIS Institute of Technology (BITM)
-Job Responsibilities: (Intern) UI Design, Team Project
+Software Engineer, BASIS Institute of Technology (BITM) \
+Job Responsibilities: (Intern) UI Design, Team Project \
 Conceptualizing 4+ visuals based on requirements per Month
 
 Achievement:
