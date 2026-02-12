@@ -1,5 +1,10 @@
 var addressPoints = [
   [
+    "Mobile Application Development<br />Sanowara Islam Boy's High School; Dhaka, Bangladesh",
+    23.7643863,
+    90.3890144
+  ],
+  [
     "Secondary School Certificate<br />Sanowara Islam Boy's High School; Chittagong, Bangladesh",
     22.333778,
     91.8344348
