@@ -1,8 +1,8 @@
 var addressPoints = [
   [
-    "Talk 1 on Relevant Topic in Your Field<br />UC San Francisco, Department of Testing; San Francisco, CA, USA",
-    37.7879363,
-    -122.4075201
+    "Secondary School Certificate<br />Sanowara Islam Boy's High School; Chittagong, Bangladesh",
+    22.333778,
+    91.8344348
   ],
   [
     "BSC in Computer Science & Engineering<br />Daffodil International University; Dhaka, Bangladesh",
