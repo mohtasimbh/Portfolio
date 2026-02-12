@@ -15,8 +15,8 @@ var addressPoints = [
     -122.272863
   ],
   [
-    "MSC in Computer Science & Engineering<br />Comilla University; Dhaka, Bangladesh",
-    23.7643863,
-    90.3890144
+    "MSC in Computer Science & Engineering<br />Comilla University; Comilla, Bangladesh",
+    23.4609839,
+    91.1812216
   ]
 ];
