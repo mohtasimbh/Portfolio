@@ -5,9 +5,9 @@ var addressPoints = [
     -122.4075201
   ],
   [
-    "Talk 2 on Relevant Topic in Your Field<br />London School of Testing; London, UK",
-    51.5074456,
-    -0.1277653
+    "BSC in Computer Science & Engineering<br />Daffodil International University; Dhaka, Bangladesh",
+    23.7643863,
+    90.3890144
   ],
   [
     "Tutorial 1 on Relevant Topic in Your Field<br />UC-Berkeley Institute for Testing Science; Berkeley, CA, USA",
