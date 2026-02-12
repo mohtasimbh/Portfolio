@@ -11,7 +11,7 @@ paperurl: "https://mohtasimbh.github.io/Portfolio/files/paper1.pdf"
 citation: "Mohtasim Billah, (January 2023). &quot;ImaGen: AI Image Generator.&quot; <i>Dafance</i>. 1(1)."
 ---
 
-This project “ImaGen: AI Image Generator in Android and IOS platform” is a system for
+**This project** “[ImaGen: AI Image Generator in Android and IOS platform](https://github.com/mohtasimbh/ImaGen)” is a system for
 getting high-quality and realistic images from text. Many apps are providing this service. But
 most of the apps are not able to generate realistic and high-resolution images according to the
 text. Which we are able to implement in our app. our app is used in various fields, including
@@ -25,3 +25,5 @@ performance in image generation tasks. To develop this project, we have used Flu
 Framework, Dart, as a programming language, and Visual Studio, Firebase, and an emulator
 for testing purposes. This app was tested in many ways after implementation and it works
 successfully.
+
+You can view the full project and download it from [GitHub](https://github.com/mohtasimbh/ImaGen).
