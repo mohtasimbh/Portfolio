@@ -1,20 +1,17 @@
 ---
-title: "Teaching experience 1"
+title: "Volunteer"
 collection: teaching
-type: "Undergraduate course"
-permalink: /teaching/2014-spring-teaching-1
-venue: "University 1, Department"
-date: 2014-01-01
-location: "City, Country"
+type: "Workshop"
+permalink: /teaching/2015-spring-teaching-1
+venue: " DIU Computer & Programming Club "
+date: 2022-03-01
+location: "Dhaka, Bangladesh"
 ---
-
-This is a description of a teaching experience. You can use markdown like any other post.
-
-Heading 1
-======
-
-Heading 2
-======
-
-Heading 3
-======
+**Job Responsibilities:** Guarding Exam Hall, Problem Tester in 4 Contests.
+**Achivment:**
+Supported exam operations for 200 plus participants with zero reported disruptions across multiple sessions.
+Served as problem tester in 4 programming contests, identified logic errors and unclear statements before release.
+Helped reduce contest day technical complaints by reviewing edge cases and validating sample outputs.
+Coordinated with organizers to enforce exam rules, kept schedules on time for every assigned shift.
+Verified problem constraints and test data accuracy, improved fairness and consistency in scoring.
+Assisted onsite teams during contests, ensured smooth participant flow and issue resolution.
