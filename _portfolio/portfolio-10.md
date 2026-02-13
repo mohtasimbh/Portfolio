@@ -1,340 +1,116 @@
 ---
-title: "Multi-Tenant SaaS Platform with AI-Powered Features"
-excerpt: "Architected and launched a B2B SaaS platform serving 2,400 enterprise customers, featuring AI-powered document processing, automated workflows, and real-time collaboration, processing 14 million documents monthly with 99.95% uptime."
+title: "devChat-App"
+excerpt: "Flutter Video Chat App"
 collection: portfolio
 ---
 
 ## Project Overview
 
-Led the technical design and implementation of a comprehensive document intelligence platform for enterprise customers. The system combines document processing, workflow automation, AI-powered extraction, and collaboration features in a secure multi-tenant architecture serving Fortune 500 companies across regulated industries.
+## [Project Link](https://github.com/mohtasimbh/devChat-App)
 
-## The Challenge
+## Description
 
-The startup had a promising MVP but faced scalability and enterprise readiness challenges:
+Previouly we built a flutter chatting app mostly text and image based. This time we will build a new chatting app using flutter framework. This will include some cool features which covers both video and voice calling along with text and image sending as well as emoji.
 
-- **Architecture:** Single-tenant design couldn't scale beyond 50 customers
-- **Performance:** Document processing took 30+ seconds, frustrating users
-- **Security:** Insufficient isolation for enterprise requirements
-- **Compliance:** No SOC 2, HIPAA, or GDPR compliance
-- **AI accuracy:** Document extraction accuracy at 71%, requiring manual correction
-- **Reliability:** Frequent outages during peak usage
+Another main feature of this app is that, you can notification both for audio and video calling. If someone called you you will get notification and the other person will have to wait until you receive it. Both end will have calling sound. It's custom sound.
 
-Requirements for the platform rebuild:
+This chat app is also included here in this study app source code.
 
-- Multi-tenant architecture supporting 5,000+ customers
-- Document processing under 5 seconds for standard documents
-- Enterprise security with tenant isolation
-- SOC 2 Type II, HIPAA, and GDPR compliance
-- AI extraction accuracy above 95%
-- 99.9% uptime SLA
+## Get Started
 
-## Technical Architecture
+- Clone this repository
+- Run `flutter packages get`
+- Run `flutter run` (remember to open simulator or connect physical device, iOS auto run additional command `pod install`)
 
-### Multi-Tenancy Design
+## Cool features of the app
 
-**Isolation model:**
-Hybrid approach balancing cost efficiency and isolation:
+- Video chat
+- Voice chat
+- Text chat
+- Sending images
+- Sending stickers
+- Save chat in the local database
+- Sync local database with remote database
+- Both laravel and firebase backend
+- Notification is send first as you do video
+- Notification number and icons based on your chat message number
+- Notification is received even if the app is killed
+- User need to tap on the button to accept the video call
+- Notification is send first as you do voice call
+- There's sound on the other side as you call
+- Caller also can hear the sound
+- Every text message has notification
+- Call ends automitically as you hang up the call
+- Phone number message verification
+- Multi line mesagge box as you type more
+- Auto hide of message box as you are done
+- Show chat time duration
+- Audio video controller (buttons)
 
-_Compute isolation:_
+## ChatApp UI
 
-- Shared Kubernetes clusters with namespace isolation
-- Network policies enforcing tenant boundaries
-- Resource quotas per tenant
-- Optional dedicated nodes for enterprise tier
+![App UI](https://user-images.githubusercontent.com/61247278/223838120-25545547-53f8-43ee-a746-6f42b2a7e0ba.jpg)
 
-_Data isolation:_
+## Technology used in this app
 
-- Logical isolation within shared databases (tenant_id column)
-- Tenant-specific encryption keys
-- Schema-per-tenant option for enterprise
-- Complete physical isolation for regulated industries
+- Flutter framework
+- Firebase service
+- Agora SDK
+- Laravel framework
 
-_Storage isolation:_
+The whole architecture is based on Flutter framework. We used Firebase service for chatting and storing user chat information including texts and images.
 
-- S3 buckets with prefix-based separation
-- Tenant-specific KMS keys
-- Access logging per tenant
-- Cross-tenant access prevention
+We used Agora SDK for video chat and voice chat.
 
-**Tenant context:**
-Tenant context propagated throughout the stack:
+We used Laravel Framework for basic backend service and where you can video basic user data.
 
-```python
-# Middleware extracts tenant from JWT
-tenant_id = extract_tenant(request.headers['Authorization'])
+![App UI](https://user-images.githubusercontent.com/61247278/223838152-73d318f3-4b65-4d29-8c7c-871ab4f63e29.jpg)
 
-# Context available throughout request lifecycle
-with tenant_context(tenant_id):
-    # All database queries automatically scoped
-    documents = Document.query.all()  # Implicitly filtered by tenant
-```
+## App Deployment Locally
 
-### Document Processing Pipeline
+1. create a new flutter project.
+2. copy all the files and folers like lib, assets and pubspec.yaml from the downloaded project in your new project.
+3. make sure you create a firebase project with above project from terminal.
+4. you need to make sure you connect this app with your own firebase project.
+5. make sure you generate SHA1 and SHA256 key with your project.
+6. create an account with Agora video sdk.
+7. install the laravel application.
+8. make sure that you have SSL with your domain.
+9. make sure you replace the App ID and App Certificate.
 
-**Ingestion:**
+## Laravel Backend
 
-- Multi-channel upload (web, API, email, integrations)
-- Virus scanning with ClamAV
-- File type validation and normalization
-- Metadata extraction
-- Queue assignment based on document type and priority
+The backend is mostly used for to know how many users do you have and who they are. You may also maintain them from there.
 
-**Processing stages:**
+![App UI](https://user-images.githubusercontent.com/61247278/223838032-1b5cb9ca-23a1-4743-91b5-0599f2f3bdd5.png)
 
-1. **Pre-processing:** PDF normalization, image enhancement, deskewing
-2. **OCR:** Tesseract and cloud OCR ensemble for text extraction
-3. **Classification:** ML model categorizing document type
-4. **Extraction:** AI models extracting structured data
-5. **Validation:** Business rules and confidence thresholds
-6. **Post-processing:** Indexing, thumbnail generation, notifications
+Backend installation requirement
 
-**Scaling strategy:**
+1. Prepare a domain
+2. Have it with SSL
+3. PHP verion 7.4 or higher
+4. MySQL version 5.7 or higher
 
-- Kubernetes HPA scaling workers based on queue depth
-- GPU nodes for ML inference workloads
-- Spot instances for batch processing (70% cost savings)
-- Priority queues for time-sensitive documents
+## Notification
 
-### AI/ML Capabilities
+See how notification works. It should be coming from your app to your server to your firebase account to your user. For this reason we have integrated Firebase Admin SDK with PHP.
 
-**Document classification:**
+![App UI](https://user-images.githubusercontent.com/61247278/223838091-5acc625f-2a9a-47b6-af18-f95a3c1c772e.jpg)
 
-- Fine-tuned LayoutLM model on customer documents
-- 200+ document types supported
-- 97.3% accuracy across all types
-- Continuous learning from corrections
+## Why use third party SDK
 
-**Information extraction:**
+The reason why we use third party SDK to do it, because Flutter does not provide any higher level API to connect with video technology like WebRTC.
 
-- Custom transformer models per document type
-- Invoice extraction: vendor, amounts, line items, dates
-- Contract extraction: parties, terms, clauses, dates
-- Form extraction: field detection and value extraction
-- Table extraction with structure preservation
+If a small team or some students try to do it, it would be almost very difficult to get the job done. Even if they do it, the video signal would be very bad and shaky. Apart from them they have to build up their own server to send the video signals to different users in different country.
 
-**Training pipeline:**
+They also need to spend thousands of dollars for building servers and decoding the signal.
 
-- Customer-specific model fine-tuning
-- Few-shot learning for new document types
-- Active learning prioritizing uncertain examples
-- Automated retraining on correction data
+Third party SDK solves these problems since they are dedicated to do it and they have a very big team to get the job done.
 
-**Extraction accuracy:**
-| Document Type | Accuracy (Before) | Accuracy (After) |
-|---------------|-------------------|------------------|
-| Invoices | 74% | 96.2% |
-| Contracts | 68% | 93.7% |
-| Forms | 72% | 95.1% |
-| Tables | 65% | 91.8% |
+In this app, the way used it here is an example. It requires PHP and Agora integration.
 
-### Workflow Engine
+![App UI](https://user-images.githubusercontent.com/61247278/223828037-3080bd0e-3197-435d-b5a2-e63960f7884a.jpg)
 
-**Workflow definition:**
-Visual workflow builder with code fallback:
+## Feedback
 
-- Drag-and-drop interface for common patterns
-- Conditional branching based on document content
-- Integration nodes for external systems
-- Human-in-the-loop approval steps
-- SLA tracking and escalation
-
-**Execution engine:**
-
-- Temporal.io for durable workflow execution
-- Exactly-once semantics for critical operations
-- Long-running workflow support (days to months)
-- Visibility and debugging tools
-
-**Common workflows:**
-
-- Invoice approval routing
-- Contract review and signing
-- Compliance document collection
-- Customer onboarding packets
-
-### Collaboration Features
-
-**Real-time collaboration:**
-
-- WebSocket-based presence and updates
-- Operational transformation for concurrent edits
-- Commenting and @mentions
-- Activity feeds and notifications
-
-**Review and approval:**
-
-- Multi-stage review workflows
-- Role-based permissions
-- Digital signatures (DocuSign, Adobe Sign integration)
-- Audit trail of all changes
-
-**External collaboration:**
-
-- Secure sharing links with expiration
-- Guest access with limited permissions
-- External comment collection
-- Client portals
-
-### Integration Layer
-
-**Pre-built integrations:**
-
-- Cloud storage: Google Drive, Dropbox, Box, OneDrive
-- CRM: Salesforce, HubSpot
-- ERP: SAP, NetSuite, QuickBooks
-- E-signature: DocuSign, Adobe Sign
-- Communication: Slack, Microsoft Teams, email
-
-**Integration framework:**
-
-- OAuth 2.0 for authentication
-- Webhook delivery with retry
-- Polling fallback for systems without webhooks
-- iPaaS connectors (Workato, Tray.io)
-
-**API:**
-
-- RESTful API with OpenAPI specification
-- GraphQL for complex queries
-- Rate limiting per tenant
-- API versioning with deprecation policies
-
-### Security and Compliance
-
-**Authentication:**
-
-- SSO support (SAML, OIDC)
-- MFA enforcement options
-- Session management with configurable timeouts
-- IP allowlisting for enterprise
-
-**Authorization:**
-
-- RBAC with custom role definition
-- Attribute-based access control (ABAC)
-- Document-level permissions
-- Field-level redaction
-
-**Encryption:**
-
-- TLS 1.3 for transit
-- AES-256 for data at rest
-- Tenant-specific KMS keys
-- Customer-managed keys option
-
-**Compliance certifications:**
-
-- SOC 2 Type II
-- HIPAA (with BAA)
-- GDPR compliance
-- ISO 27001 (in progress)
-
-**Audit logging:**
-
-- All user actions logged
-- API access logging
-- Admin action logging
-- Log retention and export
-
-### Infrastructure
-
-**Cloud architecture:**
-
-- Primary: AWS us-east-1
-- DR: AWS us-west-2
-- Edge: CloudFront for static assets
-- Multi-region database replication
-
-**Kubernetes platform:**
-
-- EKS with managed node groups
-- Istio service mesh
-- Horizontal pod autoscaling
-- Pod disruption budgets for availability
-
-**Observability:**
-
-- Datadog for metrics and APM
-- Centralized logging with Loki
-- Distributed tracing
-- Custom dashboards per tenant
-
-## Results
-
-### Business Metrics
-
-| Metric                      | Launch | Current |
-| --------------------------- | ------ | ------- |
-| Enterprise customers        | 12     | 2,400   |
-| Monthly documents processed | 180K   | 14M     |
-| Monthly recurring revenue   | $89K   | $4.2M   |
-| Net revenue retention       | 94%    | 127%    |
-| Customer satisfaction (NPS) | 23     | 67      |
-
-### Technical Metrics
-
-| Metric                       | Before Rebuild | After       |
-| ---------------------------- | -------------- | ----------- |
-| Document processing time     | 32 seconds     | 3.4 seconds |
-| AI extraction accuracy       | 71%            | 95.2%       |
-| Uptime                       | 97.2%          | 99.97%      |
-| API response time (p50)      | 890ms          | 127ms       |
-| Support tickets per customer | 4.2/month      | 0.8/month   |
-
-### Enterprise Wins
-
-**Notable customers:**
-
-- 3 Fortune 100 companies
-- 12 Fortune 500 companies
-- 47 financial services firms
-- 23 healthcare organizations
-
-**Largest deployment:**
-
-- 12,000 users
-- 2.3M documents/month
-- Custom AI models for 34 document types
-- Integration with 8 internal systems
-
-## Technologies Used
-
-- **Backend:** Python (FastAPI), Go (high-performance services)
-- **Frontend:** React, TypeScript, TailwindCSS
-- **Database:** PostgreSQL (primary), Redis (caching), Elasticsearch (search)
-- **ML/AI:** PyTorch, Hugging Face Transformers, custom models
-- **Infrastructure:** AWS, Kubernetes (EKS), Terraform
-- **Workflow:** Temporal.io
-- **Observability:** Datadog, Loki, Jaeger
-- **Security:** Vault (secrets), OPA (policy)
-
-## Lessons Learned
-
-**Multi-tenancy is a spectrum:**
-
-- One-size-fits-all doesn't work for enterprise
-- Offer isolation tiers matching customer requirements
-- Physical isolation for regulated industries is essential
-- Design for tenant-specific customization
-
-**AI accuracy requires iteration:**
-
-- Initial models are just the beginning
-- Feedback loops from corrections are gold
-- Per-customer fine-tuning unlocks enterprise deals
-- Human-in-the-loop is a feature, not a failure
-
-**Enterprise sales drive architecture:**
-
-- Security requirements discovered during sales process
-- Compliance certifications are table stakes
-- Integrations determine deal success
-- Build for enterprise from the start
-
-## Links
-
-- [Product Website](#)
-- [API Documentation](#)
-- [Security Whitepaper](#)
-- [Architecture Overview](#)
-
+If you have any feedback, please reach out to me at shakilwell0@gmail.com
