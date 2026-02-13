@@ -1,129 +1,109 @@
 ---
-title: "Neural Network-Based Real-Time Object Detection System"
-excerpt: "A high-performance computer vision system capable of detecting and tracking multiple objects in real-time video streams with 94% accuracy, deployed on edge devices for industrial quality control applications."
+title: "IMAGEN"
+excerpt: "Image Generator AI From Text"
 collection: portfolio
 ---
 
+**[Project Link](https://github.com/mohtasimbh/ImaGen)**
+
 ## Project Overview
 
-Developed a production-ready object detection system that processes live video feeds at 60 FPS while maintaining high accuracy across diverse lighting conditions and object orientations. The system was designed for manufacturing quality control, identifying defective products on high-speed assembly lines before they reach packaging.
+AI powered text to image generator mobile app
 
-## The Challenge
+## Description
 
-Our client, a major electronics manufacturer, was losing approximately $2.3 million annually to defective products reaching customers. Their existing manual inspection process caught only 73% of defects, with human inspectors fatiguing after 2-3 hours of continuous work. They needed a solution that could:
+ImaGen is a cross platform mobile app that turns text prompts into images using an AI backend. The project combines a Flutter frontend with a server side image generation service. It targets Android and iOS from a single codebase.
 
-- Process 120 units per minute on multiple assembly lines
-- Detect 47 distinct defect types across 12 product categories
-- Operate 24/7 without performance degradation
-- Deploy on edge devices without cloud connectivity (air-gapped facility)
-- Integrate with existing PLCs and rejection mechanisms
+## Screenshots
 
-## Technical Approach
+![Capture1](https://user-images.githubusercontent.com/61247278/214334949-5b2d095d-c928-446c-89a6-5665289493b6.PNG)
+![Capture2](https://user-images.githubusercontent.com/61247278/214334968-10e50e33-ee44-4e3e-b54d-6fa937247162.PNG)
+![Capture3](https://user-images.githubusercontent.com/61247278/214334973-e69eb08c-07ee-4e46-bf5e-b6dfdc6a5be9.PNG)
+![Capture4](https://user-images.githubusercontent.com/61247278/214334979-33e4cd4f-0872-48b2-b482-0691773677dd.PNG)
+![Capture5](https://user-images.githubusercontent.com/61247278/214334983-94b3b8b4-dbbc-41bf-90d7-d7c03571416a.PNG)
+![Capture6](https://user-images.githubusercontent.com/61247278/214334986-8200f683-bb93-4c19-909d-9c0536d1ecc2.PNG)
+![Capture7](https://user-images.githubusercontent.com/61247278/214334989-3f258610-5717-4d41-8f69-d3084989a508.PNG)
+![Capture8](https://user-images.githubusercontent.com/61247278/214334997-af5314c6-bb17-4785-a0ce-6a7a5ba581bb.PNG)
+![Capture9](https://user-images.githubusercontent.com/61247278/214335003-79514709-84be-4e94-9caa-6413bdc70263.PNG)
+![1](https://user-images.githubusercontent.com/61247278/214335242-43bf27dc-5cfa-4900-86d0-3cdb3d21b4f0.PNG)
 
-### Architecture Selection
+## Features
 
-After benchmarking multiple architectures, we selected a modified YOLOv8 backbone with custom attention mechanisms optimized for small defect detection. Key modifications included:
+- Text prompt to image generation
+- Android and iOS support
+- Shared Flutter UI and business logic
+- Backend service for AI processing
+- Local caching and network layer
+- Basic test coverage
 
-- **Multi-scale feature pyramid network** with five output scales instead of the standard three, enabling detection of defects as small as 0.5mm
-- **Deformable convolutions** in the backbone to handle varying object orientations without data augmentation overhead
-- **Channel attention modules** that learned to focus on subtle texture differences indicating defects
-- **Knowledge distillation** from a larger teacher model to maintain accuracy while reducing inference time
+## Project Structure
 
-### Training Pipeline
+```
+android/     Android platform code
+ios/         iOS platform code
+lib/         Flutter UI and core logic
+server/      Backend image generation service
+assets/      Fonts and static resources
+images/      Sample images and UI assets
+test/        Unit and integration tests
+```
 
-Data collection and annotation presented significant challenges:
+## Tech Stack
 
-**Dataset creation:**
+- Flutter
+- Dart
+- Python backend service
+- Provider for state management
+- Dio for network requests
+- Hive for local storage
 
-- Captured 2.3 million images over 6 months from production lines
-- Partnered with quality control experts to annotate 180,000 images with bounding boxes and defect classifications
-- Implemented active learning to prioritize annotation of edge cases and rare defects
-- Generated synthetic defects using GANs to augment underrepresented categories
+## Installation
 
-**Training infrastructure:**
+1. Clone the repository
 
-- Distributed training across 8 NVIDIA A100 GPUs using PyTorch DDP
-- Mixed-precision training with gradient accumulation for effective batch sizes of 256
-- Custom learning rate schedules with warm restarts for each defect category
-- Online hard example mining to focus training on difficult cases
+   ```
+   git clone https://github.com/mohtasimbh/ImaGen.git
+   cd ImaGen
+   ```
 
-### Edge Deployment
+2. Install dependencies
 
-The production environment required inference on NVIDIA Jetson AGX Orin modules without cloud connectivity:
+   ```
+   flutter pub get
+   ```
 
-**Optimization pipeline:**
+3. Start the backend server
 
-- Quantization-aware training to INT8 precision with minimal accuracy loss (0.3% mAP degradation)
-- TensorRT optimization with layer fusion and kernel auto-tuning
-- Custom CUDA kernels for preprocessing operations
-- Multi-stream inference to maximize GPU utilization
+   ```
+   cd server
+   python main.py
+   ```
 
-**Deployment architecture:**
+4. Run the mobile app
 
-- Containerized application using Docker with NVIDIA runtime
-- Redis for inter-process communication between camera streams
-- SQLite for local logging and analytics
-- Modbus TCP for PLC integration and rejection triggering
+   ```
+   flutter run
+   ```
 
-## Results
+## Usage
 
-### Performance Metrics
+1. Launch the app on a device or emulator
+2. Enter a text prompt
+3. Tap the generate button
+4. Wait for the image result
 
-| Metric                       | Before       | After         |
-| ---------------------------- | ------------ | ------------- |
-| Defect Detection Rate        | 73%          | 97.2%         |
-| False Positive Rate          | 8.1%         | 1.3%          |
-| Processing Speed             | 45 units/min | 147 units/min |
-| Inspection Coverage          | 3 lines      | 12 lines      |
-| Annual Defect-Related Losses | $2.3M        | $180K         |
+## Development Goals
 
-### Technical Achievements
+- Improve prompt controls
+- Add advanced generation settings
+- Expand test coverage
+- Optimize performance
+- Improve UI polish
 
-- **Inference speed:** 16.7ms per frame (60 FPS) on Jetson AGX Orin
-- **Model size:** 23MB quantized (down from 187MB FP32)
-- **Latency:** Camera-to-rejection trigger in under 50ms
-- **Uptime:** 99.97% over 18 months of operation
-- **Accuracy:** 94.3% mAP@0.5, 89.1% mAP@0.5:0.95
+## Contribution
 
-### Business Impact
+Pull requests are welcome. Open an issue first to discuss major changes.
 
-- ROI achieved in 4.7 months
-- Enabled expansion of quality guarantee program
-- Reduced customer returns by 89%
-- Redeployed 23 quality inspectors to higher-value roles
-- System licensed to two partner facilities
+## License
 
-## Technologies Used
-
-- **Deep Learning:** PyTorch, TensorRT, ONNX
-- **Computer Vision:** OpenCV, CUDA, cuDNN
-- **Edge Computing:** NVIDIA Jetson, Docker, Kubernetes
-- **Data Pipeline:** Apache Kafka, Redis, PostgreSQL
-- **Monitoring:** Prometheus, Grafana, custom alerting
-- **Languages:** Python, C++, CUDA
-
-## Lessons Learned
-
-**What worked well:**
-
-- Early involvement of domain experts in annotation and validation
-- Iterative deployment starting with single line before scaling
-- Comprehensive monitoring from day one
-- Building synthetic data generation early in the project
-
-**What we'd do differently:**
-
-- Start quantization-aware training earlier (not as post-processing)
-- Build more robust data versioning from the beginning
-- Create better tooling for production debugging
-- More extensive failure mode testing before deployment
-
-## Links
-
-- [Technical Documentation](#)
-- [System Architecture Diagram](#)
-- [Performance Benchmarks](#)
-- [Case Study PDF](#)
-
-
-
+Add your preferred license here.
