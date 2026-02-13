@@ -4,9 +4,9 @@ excerpt: "Image Generator AI From Text"
 collection: portfolio
 ---
 
-**[Project Link](https://github.com/mohtasimbh/ImaGen)**
-
 ## Project Overview
+
+**[Project Link](https://github.com/mohtasimbh/ImaGen)**
 
 AI powered text to image generator mobile app
 
