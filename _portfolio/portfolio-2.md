@@ -1,216 +1,147 @@
 ---
-title: "Distributed Microservices Platform for Financial Trading"
-excerpt: "Architected and deployed a high-frequency trading infrastructure processing 2.3 million transactions per second with sub-millisecond latency, featuring automated failover, real-time risk management, and regulatory compliance logging."
+title: "Lagbe E-commerce App"
+excerpt: "E-commerce Platform that facilitates online shopping"
 collection: portfolio
 ---
 
 ## Project Overview
 
-Designed and implemented a complete trading infrastructure for a quantitative hedge fund, replacing their legacy monolithic system with a modern microservices architecture. The platform handles order routing, execution, risk management, and regulatory reporting across 14 global exchanges.
+# Lagbe E-commerce Platform
 
-## The Challenge
+[Web](https://github.com/mohtasimbh/Lagbe_E-commerce_Web) \
+[App](https://github.com/mohtasimbh/Lagbe_E-commerce_App)
 
-The client's existing system was approaching its limits:
+Lagbe is a full e-commerce solution that includes both a web storefront and a cross platform mobile app. The system allows users to browse products, manage carts, and interact with a modern shopping interface across devices.
 
-- **Latency:** 15-20ms order-to-execution was uncompetitive in modern markets
-- **Scalability:** System buckled during high-volatility events (flash crashes, earnings releases)
-- **Reliability:** Average of 3.2 hours downtime monthly, costing $400K+ in missed opportunities
-- **Compliance:** Manual regulatory reporting taking 2 FTEs and frequently delayed
-- **Development velocity:** 6-month average for new strategy deployment
+## Overview
 
-They needed a platform that could:
+This project is split into two main parts:
 
-- Process orders in under 500 microseconds end-to-end
-- Handle 10x normal volume during volatility spikes
-- Achieve 99.999% uptime (5.26 minutes/year maximum downtime)
-- Automate all regulatory reporting (MiFID II, SEC, FINRA)
-- Deploy new trading strategies in under 2 weeks
+- Lagbe E-commerce Web
+- Lagbe E-commerce Mobile App
 
-## Technical Architecture
+Both projects share the same product ecosystem and are designed to work together as a unified shopping platform.
 
-### Core Design Principles
+## Lagbe E-commerce Web
 
-**Event-driven architecture:** Every state change produces an immutable event, enabling perfect audit trails, replay capabilities, and loose coupling between services.
+### Description
 
-**Shared-nothing design:** Each service owns its data completely, communicating only through well-defined APIs and event streams. No shared databases, no distributed transactions.
+A browser based e-commerce storefront optimized for responsive layouts. Users browse products, view product details, and interact with a shopping interface from desktop or mobile browsers.
 
-**Mechanical sympathy:** Careful attention to hardware characteristics — cache-line alignment, NUMA-aware memory allocation, kernel bypass networking, busy-wait spinlocks instead of sleeping locks.
+### Features
 
-### Service Decomposition
+- Product listing pages
+- Product detail view
+- Search and filtering
+- Shopping cart interface
+- Responsive design
+- Ready to deploy static build
 
-The monolith was decomposed into 34 microservices across five domains:
+### Tech Stack
 
-**Market Data Domain:**
+- Flutter Web build
+- HTML wrapper
+- JavaScript compiled output
 
-- Feed handlers for each exchange (14 services)
-- Normalization service converting exchange-specific formats to canonical model
-- Aggregation service building consolidated order books
-- Distribution service with multicast delivery to consumers
+### Web Project Structure
 
-**Order Management Domain:**
+```
+assets/         Static images and UI assets
+canvaskit/      Flutter web canvas files
+icons/          Web icons
+index.html      Web entry file
+main.dart.js    Compiled Flutter web script
+manifest.json   Web manifest
+version.json    Version metadata
+```
 
-- Order gateway receiving strategy signals
-- Smart order router selecting optimal execution venues
-- Execution management tracking order lifecycle
-- Position service maintaining real-time positions
+### Run Web Locally
 
-**Risk Domain:**
+```
+git clone https://github.com/mohtasimbh/Lagbe_E-commerce_Web.git
+flutter build web
+python3 -m http.server 8000
+```
 
-- Pre-trade risk checking (position limits, concentration, velocity)
-- Real-time P&L calculation
-- Margin monitoring and alerting
-- Exposure aggregation across strategies
+Open browser at:
 
-**Strategy Domain:**
+```
+http://localhost:8000
+```
 
-- Strategy container runtime
-- Signal generation services
-- Backtesting infrastructure
-- Performance attribution
+---
 
-**Compliance Domain:**
+## Lagbe E-commerce Mobile App
 
-- Trade reporting (real-time regulatory feeds)
-- Best execution analysis
-- Transaction cost analysis
-- Audit log aggregation
+### Description
 
-### Technology Stack
+A Flutter based mobile shopping app for Android and iOS. The app connects with Firebase services and provides a mobile optimized e-commerce experience.
 
-**Messaging:** Custom-built message bus using kernel bypass (DPDK) with Aeron for inter-process communication. Latency: 1.2 microseconds median, 4.7 microseconds 99th percentile.
+### Features
 
-**Compute:** C++ for latency-critical paths (order routing, risk checking), Rust for reliability-critical services (compliance, logging), Go for control plane services (deployment, monitoring).
+- Product browsing with images
+- Add to cart workflow
+- Firebase authentication
+- Firestore product storage
+- Android support
+- iOS support
+- Responsive UI layout
 
-**Storage:**
+### Tech Stack
 
-- In-memory data grids (custom implementation) for hot data
-- FoundationDB for transactional state
-- ClickHouse for analytics and historical queries
-- S3-compatible object storage for archives
+- Flutter framework
+- Dart
+- Firebase Authentication
+- Firestore database
+- Provider state management
 
-**Infrastructure:**
+### Mobile Project Structure
 
-- Bare metal servers in co-located data centers
-- Custom container runtime (not Docker — too much overhead)
-- Consul for service discovery
-- Custom deployment orchestration (Kubernetes latency was unacceptable)
+```
+android/        Android platform code
+ios/            iOS platform code
+lib/            App source code
+assets/images/  Product and UI assets
+functions/      Backend helpers
+web/            Web build output
+test/           Unit and widget tests
+```
 
-### Low-Latency Optimizations
+### Run Mobile App
 
-**Network layer:**
+```
+git clone https://github.com/mohtasimbh/Lagbe_E-commerce_App.git
+cd Lagbe_E-commerce_App
+flutter pub get
+flutter run
+```
 
-- Kernel bypass using Solarflare OpenOnload
-- FPGA-accelerated network cards for market data parsing
-- Dedicated network paths for trading vs. monitoring traffic
-- Multicast for market data distribution
+### Firebase Setup
 
-**Application layer:**
+- Create Firebase project
+- Add Android and iOS apps
+- Download config files
+- Enable Authentication
+- Enable Firestore
 
-- Object pooling to eliminate allocation in hot paths
-- Cache-aligned data structures
-- Lock-free queues between components
-- CPU pinning and isolation (isolcpus)
-- Huge pages for reduced TLB misses
+Files required:
 
-**OS layer:**
+- google-services.json
+- GoogleService-Info.plist
 
-- Custom Linux kernel with PREEMPT_RT patches
-- Disabled transparent huge pages
-- CPU frequency governors locked to maximum
-- Network interrupt coalescing tuned per-workload
+## Development Ideas
 
-## Deployment and Operations
+- Payment gateway integration
+- Order tracking
+- User profiles
+- Product categories
+- Admin dashboard
+- Backend API integration
 
-### Infrastructure as Code
+## Contribution
 
-Complete infrastructure defined in code:
+Open an issue before major changes. Pull requests are welcome.
 
-- Terraform for cloud resources (monitoring, backup)
-- Ansible for bare metal provisioning
-- Custom tooling for deployment orchestration
-- GitOps workflow with automated rollback
+## License
 
-### Observability
-
-**Metrics:**
-
-- Custom metrics collection (Prometheus overhead was too high)
-- 10-microsecond resolution for latency measurements
-- Automated anomaly detection
-- Real-time dashboards with 100ms refresh
-
-**Tracing:**
-
-- Distributed tracing with nanosecond timestamps
-- Correlation IDs across all services
-- Trace sampling for high-volume paths
-- Full trace capture for orders over threshold value
-
-**Logging:**
-
-- Structured logging to ClickHouse
-- 90-day hot retention, 7-year cold archive
-- Full query capability for compliance investigations
-- Automated alerting on error patterns
-
-### Disaster Recovery
-
-- Active-active deployment across two data centers
-- Automatic failover in under 50ms
-- State replication using Raft consensus
-- Daily disaster recovery drills
-- Chaos engineering program with random failure injection
-
-## Results
-
-### Performance Metrics
-
-| Metric                           | Legacy          | New Platform         |
-| -------------------------------- | --------------- | -------------------- |
-| Order-to-execution latency (p50) | 17.3ms          | 247μs                |
-| Order-to-execution latency (p99) | 34.1ms          | 892μs                |
-| Peak throughput                  | 180K orders/sec | 2.3M orders/sec      |
-| Monthly downtime                 | 3.2 hours       | 0.4 minutes          |
-| Strategy deployment time         | 6 months        | 8 days               |
-| Regulatory report generation     | 4 hours manual  | 12 seconds automated |
-
-### Business Impact
-
-- Trading capacity increased 12x
-- Able to pursue latency-sensitive strategies previously impossible
-- Compliance team reduced from 8 to 3 FTEs
-- New strategy deployment accelerated by 22x
-- Zero regulatory findings in subsequent audits
-
-## Lessons Learned
-
-**Architecture decisions:**
-
-- Event sourcing was essential for compliance but added complexity
-- Investing in custom tooling for the critical path paid off massively
-- Service boundaries aligned with team boundaries worked well
-- Starting with more services than needed was easier than splitting later
-
-**Operational insights:**
-
-- Observability investment should front-load, not lag
-- Automated testing in production-like environments is non-negotiable
-- Chaos engineering found issues that testing never would
-- Documentation of architectural decisions prevents repeated debates
-
-## Technologies Used
-
-- **Languages:** C++20, Rust, Go, Python
-- **Messaging:** Aeron, custom DPDK-based bus
-- **Storage:** FoundationDB, ClickHouse, Redis
-- **Infrastructure:** Bare metal, Terraform, Ansible
-- **Monitoring:** Custom metrics, Grafana, PagerDuty
-- **Networking:** Solarflare, FPGA acceleration
-
-## Links
-
-- [Architecture Overview](#)
-- [Latency Analysis Report](#)
-- [Deployment Runbook](#)
-
-
+Add your preferred license here.
