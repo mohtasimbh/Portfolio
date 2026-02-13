@@ -1,12 +1,10 @@
 ---
-title: "Lagbe E-commerce App"
+title: "Lagbe E-commerce Platform"
 excerpt: "E-commerce Platform that facilitates online shopping"
 collection: portfolio
 ---
 
 ## Project Overview
-
-# Lagbe E-commerce Platform
 
 [Web](https://github.com/mohtasimbh/Lagbe_E-commerce_Web) \
 [App](https://github.com/mohtasimbh/Lagbe_E-commerce_App)
