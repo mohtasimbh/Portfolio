@@ -29,4 +29,4 @@ A motivated professional with strong leadership, teamwork, and communication ski
 
 ## Teaching and Community Contributions
 
-To further contribute to the Machine Learning community, I have a [YouTube](https://www.youtube.com/@xhaaakil) and [Medium](https://medium.com/@xhaaakil) channel where I publish educational Machine Learning content.
+To further contribute to the Machine Learning community, I have a [YouTube](https://www.youtube.com/@shaaikil) and [Medium](https://medium.com/@shaaikil) channel where I publish educational Machine Learning content.
